@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { HomePage, NotFoundPageVue } from './../views';
+import { HomePage, NotFoundPageVue } from '@/views';
 
 const router = createRouter({
 	history: createWebHashHistory(),
