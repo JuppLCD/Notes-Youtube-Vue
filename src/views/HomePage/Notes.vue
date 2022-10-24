@@ -2,13 +2,13 @@
 import { useStoreVuex } from '@/store';
 import { computed } from '@vue/reactivity';
 
-import Button from '@/components/Button.vue';
+import CardNote from '@/components/CardNote.vue';
 
 const store = useStoreVuex();
-const notes = computed(() => store.state.notes.notes);
+const notes = computed(() => store.state.videoToAnalyze.notes);
 
 const deleteNote = (id: string) => {
-	store.dispatch('notes/deleteNote', { id });
+	store.dispatch('videoToAnalyze/deleteNote', { id });
 };
 </script>
 
@@ -16,12 +16,7 @@ const deleteNote = (id: string) => {
 	<section>
 		<h2>Notas</h2>
 		<ul>
-			<li v-for="note in notes" :key="note.id">
-				<h3>{{ note.title }} - {{ note.id }}</h3>
-				<p>{{ note.text }}</p>
-				<Button class="mr-2"> Edit </Button>
-				<Button @click="deleteNote(note.id)"> Delete </Button>
-			</li>
+			<CardNote v-for="note in notes" :key="note.id" :note="note" @deleteNote="deleteNote" />
 		</ul>
 	</section>
 </template>
