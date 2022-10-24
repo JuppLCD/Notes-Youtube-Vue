@@ -2,15 +2,36 @@
 import { ButtonHTMLAttributes } from 'vue';
 
 interface ButtonProps extends ButtonHTMLAttributes {
-	color?: string;
+	color?: 'blue' | 'white' | 'red' | 'green' | 'yellow';
 }
 const { color } = withDefaults(defineProps<ButtonProps>(), { color: 'blue' });
 
-// Border => bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow
+const colors = {
+	blue: {
+		normal: 'bg-blue-500 text-white',
+		hover: 'hover:bg-blue-700',
+	},
+	white: {
+		normal: 'bg-white text-gray-700',
+		hover: 'hover:bg-gray-300',
+	},
+	red: {
+		normal: 'bg-red-500 text-white',
+		hover: 'hover:bg-red-700',
+	},
+	green: {
+		normal: 'bg-green-500 text-white',
+		hover: 'hover:bg-green-700',
+	},
+	yellow: {
+		normal: 'bg-yellow-500 text-white',
+		hover: 'hover:bg-yellow-700',
+	},
+};
 </script>
 
 <template>
-	<button :class="['btn', `btn-${color}`]">
+	<button :class="['btn', `${colors[color].normal} ${colors[color].hover}`]">
 		<slot />
 	</button>
 </template>
@@ -18,11 +39,5 @@ const { color } = withDefaults(defineProps<ButtonProps>(), { color: 'blue' });
 <style scoped>
 .btn {
 	@apply font-bold py-2 px-4 rounded;
-}
-.btn-blue {
-	@apply bg-blue-500 text-white;
-}
-.btn-blue:hover {
-	@apply bg-blue-700;
 }
 </style>
