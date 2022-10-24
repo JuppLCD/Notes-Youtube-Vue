@@ -10,6 +10,9 @@ const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 	deleteNote(state, payload: { id: string }) {
 		state.notes = [...state.notes].filter((note) => note.id !== payload.id);
 	},
+	setIdYoutubeVideo(state, idVideo: string) {
+		state.idYoutubeVideo = idVideo;
+	},
 };
 
 export default mutation;

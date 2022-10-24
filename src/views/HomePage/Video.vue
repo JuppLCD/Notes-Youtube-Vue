@@ -1,23 +1,30 @@
 <script setup lang="ts">
+import { useStoreVuex } from '@/store';
+import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 
 const urlYoutube = ref('');
-const urlYoutubeEmbed = ref('https://www.youtube.com/embed/njoOd9iV2Qo');
+// Example URL => 'https://www.youtube.com/embed/njoOd9iV2Qo'
+
+const store = useStoreVuex();
+
+const urlYoutubeEmbed = computed(() => {
+	const { idYoutubeVideo } = store.state.videoToAnalyze;
+	return idYoutubeVideo ? 'https://www.youtube.com/embed/' + idYoutubeVideo : '';
+});
 
 const generateURLYoutubeEmbed = () => {
 	if (!urlYoutube.value.includes('youtube.com/watch?v=')) {
 		return alert('URL DE YOUTUBE INVALIDA');
 	}
-
 	let idVideo = urlYoutube.value.split('watch?v=')[1];
-
 	if (idVideo.includes('&')) {
 		idVideo = idVideo.split('&')[0];
 	} else if (idVideo.includes('?')) {
 		idVideo = idVideo.split('?')[0];
 	}
 
-	urlYoutubeEmbed.value = `https://www.youtube.com/embed/${idVideo}`;
+	store.commit('videoToAnalyze/setIdYoutubeVideo', idVideo);
 };
 </script>
 
@@ -28,6 +35,7 @@ const generateURLYoutubeEmbed = () => {
 	</label>
 
 	<iframe
+		v-if="urlYoutubeEmbed"
 		width="560"
 		height="315"
 		:src="urlYoutubeEmbed"
@@ -36,7 +44,7 @@ const generateURLYoutubeEmbed = () => {
 		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 		allowfullscreen
 	></iframe>
-	<!-- <div class="video"></div> -->
+	<div v-else class="video"></div>
 </template>
 
 <style scoped>
