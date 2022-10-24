@@ -1,12 +1,12 @@
 import { Module } from 'vuex';
 import { StateInterface } from '../index';
 
-import state, { NotesStateInterface } from './state';
+import state, { VideoToAnalyzeStateInterface } from './state';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-const notesModule: Module<NotesStateInterface, StateInterface> = {
+const notesModule: Module<VideoToAnalyzeStateInterface, StateInterface> = {
 	namespaced: true,
 	actions,
 	getters,

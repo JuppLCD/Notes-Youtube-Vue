@@ -1,9 +1,9 @@
 import { MutationTree } from 'vuex';
-import { NotesStateInterface } from './state';
+import { VideoToAnalyzeStateInterface } from './state';
 
 import type { Note } from '@/types/Note';
 
-const mutation: MutationTree<NotesStateInterface> = {
+const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 	addNote(state, payload: Note) {
 		state.notes.push(payload);
 	},

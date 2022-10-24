@@ -1,10 +1,10 @@
 import { ActionTree } from 'vuex';
-import { NotesStateInterface } from './state';
+import { VideoToAnalyzeStateInterface } from './state';
 import { StateInterface } from '../index';
 
 import type { Note } from '@/types/Note';
 
-const actions: ActionTree<NotesStateInterface, StateInterface> = {
+const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 	createNote({ commit }, payload: { title: string; text: string }) {
 		const id = String(new Date().getTime());
 		const newNote: Note = {

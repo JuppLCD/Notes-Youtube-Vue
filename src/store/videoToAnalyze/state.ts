@@ -1,7 +1,8 @@
 import { Note } from '@/types/Note';
 
-export interface NotesStateInterface {
+export interface VideoToAnalyzeStateInterface {
 	notes: Note[];
+	urlYoutubeEmbed: string;
 }
 
 const defaultState = [
@@ -22,8 +23,9 @@ const defaultState = [
 	},
 ];
 
-function state(): NotesStateInterface {
+function state(): VideoToAnalyzeStateInterface {
 	return {
+		urlYoutubeEmbed: '',
 		notes: defaultState,
 	};
 }

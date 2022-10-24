@@ -1,17 +1,17 @@
 import { createStore, useStore as baseUseStore } from 'vuex';
 
 // My custom modules
-import notesModule from './notes';
-import { NotesStateInterface } from './notes/state';
+import videoToAnalyzeModule from './videoToAnalyze';
+import { VideoToAnalyzeStateInterface } from './videoToAnalyze/state';
 
 // Root State Interface
 export interface StateInterface {
-	notes: NotesStateInterface;
+	videoToAnalyze: VideoToAnalyzeStateInterface;
 }
 
 export default createStore<StateInterface>({
 	modules: {
-		notes: notesModule,
+		videoToAnalyze: videoToAnalyzeModule,
 	},
 });
 
