@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStoreVuex } from '@/store';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import Button from '@/components/Button.vue';
 
@@ -25,11 +25,12 @@ const createNote = () => {
 	resetForm();
 };
 
-const optionsListNotes = [
-	{ name: 'All Notes (default)', id: 1 },
-	{ name: 'Programming', id: 2 },
-	{ name: 'Maths', id: 3 },
-];
+const optionsListNotes = computed(() => store.state.noteLists.all);
+// const optionsListNotes = [
+// 	{ name: 'All Notes (default)', id: 1 },
+// 	{ name: 'Programming', id: 2 },
+// 	{ name: 'Maths', id: 3 },
+// ];
 </script>
 
 <template>

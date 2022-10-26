@@ -4,7 +4,6 @@ import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 
 const urlYoutube = ref('');
-// Example URL => 'https://www.youtube.com/embed/njoOd9iV2Qo'
 
 const store = useStoreVuex();
 
