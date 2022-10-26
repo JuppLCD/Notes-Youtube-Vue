@@ -6,7 +6,7 @@ import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-const notesModule: Module<VideoToAnalyzeStateInterface, StateInterface> = {
+const videoToAnalyzeModule: Module<VideoToAnalyzeStateInterface, StateInterface> = {
 	namespaced: true,
 	actions,
 	getters,
@@ -14,4 +14,4 @@ const notesModule: Module<VideoToAnalyzeStateInterface, StateInterface> = {
 	state,
 };
 
-export default notesModule;
+export default videoToAnalyzeModule;

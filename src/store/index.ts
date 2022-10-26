@@ -1,4 +1,5 @@
-import { createStore, useStore as baseUseStore } from 'vuex';
+import { createStore, Store, useStore as baseUseStore } from 'vuex';
+import { InjectionKey } from 'vue';
 
 // My custom modules
 import videoToAnalyzeModule from './videoToAnalyze';
@@ -20,6 +21,8 @@ export default createStore<StateInterface>({
 	},
 });
 
+export const key: InjectionKey<Store<StateInterface>> = Symbol();
+
 export function useStoreVuex() {
-	return baseUseStore();
+	return baseUseStore(key);
 }

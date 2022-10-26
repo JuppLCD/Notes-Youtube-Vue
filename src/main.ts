@@ -3,11 +3,11 @@ import './style.css';
 import App from './App.vue';
 
 import { router } from './routes';
-import store from './store';
+import store, { key } from './store';
 
 const app = createApp(App);
 
 app.use(router);
-app.use(store);
+app.use(store, key);
 
 app.mount('#app');
