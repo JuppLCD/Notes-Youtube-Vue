@@ -25,12 +25,12 @@ const createNote = () => {
 	resetForm();
 };
 
-const optionsListNotes = computed(() => store.state.noteLists.all);
-// const optionsListNotes = [
-// 	{ name: 'All Notes (default)', id: 1 },
-// 	{ name: 'Programming', id: 2 },
-// 	{ name: 'Maths', id: 3 },
-// ];
+const optionsListNotes = computed(() => {
+	if (store.state.noteLists.all === undefined) {
+		store.dispatch('noteLists/getNoteLists');
+	}
+	return store.state.noteLists.all;
+});
 </script>
 
 <template>
