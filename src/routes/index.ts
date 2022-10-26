@@ -12,7 +12,7 @@ const router = createRouter({
 			component: HomePage,
 			children: [
 				{
-					path: '/',
+					path: '',
 					component: NotesVue,
 					name: 'home',
 				},
