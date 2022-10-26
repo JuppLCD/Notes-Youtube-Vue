@@ -21,7 +21,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 		commit('addNote', newNote);
 	},
 	deleteNote({ commit, state }, payload: { id: string }) {
-		const isNote = state.notes.some((note) => note.id === payload.id);
+		const isNote = state.notes?.some((note) => note.id === payload.id);
 		if (!isNote) {
 			console.error('Error: no se encuentra ninguna nota que posea dicho id ->' + payload.id);
 			return;
