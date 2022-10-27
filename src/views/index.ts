@@ -1,4 +1,7 @@
 import HomePage from './HomePage.vue';
-import NotFoundPageVue from './NotFoundPage.vue';
+import VideoNotesPage from './VideoNotesPage.vue';
+import SessionPage from './SessionPage.vue';
 
-export { HomePage, NotFoundPageVue };
+import NotFoundPage from './NotFoundPage.vue';
+
+export { HomePage, VideoNotesPage, NotFoundPage, SessionPage };
