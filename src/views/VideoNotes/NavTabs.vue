@@ -2,7 +2,7 @@
 	<div class="border-b border-gray-200 dark:border-gray-700">
 		<ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
 			<li class="mr-2">
-				<RouterLink class="tab" :to="{ name: 'home' }"> Notes </RouterLink>
+				<RouterLink class="tab" :to="{ name: 'YTVideoNotes' }"> Notes </RouterLink>
 			</li>
 			<li class="mr-2">
 				<RouterLink class="tab" :to="{ name: 'createNote' }"> Create Note </RouterLink>
