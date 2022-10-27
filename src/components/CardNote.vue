@@ -13,8 +13,8 @@ const emits = defineEmits<{
 	<li>
 		<h3>{{ note.title }}</h3>
 		<p>{{ note.text }}</p>
-		<Button class="mr-2"> Edit </Button>
-		<Button @click="emits('deleteNote', note.id)" color="red"> Delete </Button>
+		<Button class="mr-2" type="button"> Edit </Button>
+		<Button @click="emits('deleteNote', note.id)" color="red" type="button"> Delete </Button>
 	</li>
 </template>
 

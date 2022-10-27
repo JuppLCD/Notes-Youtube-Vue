@@ -31,7 +31,7 @@ const colors = {
 </script>
 
 <template>
-	<button :class="['btn', `${colors[color].normal} ${colors[color].hover}`]">
+	<button :class="['btn', `${colors[color].normal} ${colors[color].hover}`]" v-bind="$attrs">
 		<slot />
 	</button>
 </template>
