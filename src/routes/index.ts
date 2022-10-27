@@ -1,20 +1,22 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { HomePage, NotFoundPageVue } from '@/views';
-import NotesVue from '@/views/HomePage/Notes.vue';
-import FormCreateNoteVue from '@/views/HomePage/FormCreateNote.vue';
+import { HomePage, VideoNotesPage, NotFoundPage, SessionPage } from '@/views';
+
+import NotesVue from '@/views/VideoNotes/Notes.vue';
+import FormCreateNoteVue from '@/views/VideoNotes/FormCreateNote.vue';
 
 const router = createRouter({
 	history: createWebHashHistory(),
 	routes: [
+		{ path: '/', component: HomePage, name: 'home' },
 		{
-			path: '/',
-			component: HomePage,
+			path: '/yt-video-notes',
+			component: VideoNotesPage,
 			children: [
 				{
 					path: '',
 					component: NotesVue,
-					name: 'home',
+					name: 'YTVideoNotes',
 				},
 				{
 					path: 'create-note',
@@ -23,7 +25,19 @@ const router = createRouter({
 				},
 			],
 		},
-		{ path: '/:pathMatch(.*)*', component: NotFoundPageVue, name: 'notFound' },
+		{
+			path: '/session/login',
+			component: SessionPage,
+			name: 'login',
+		},
+		{
+			path: '/session/signup',
+			component: SessionPage,
+			name: 'signup',
+		},
+
+		// Not Found
+		{ path: '/:pathMatch(.*)*', component: NotFoundPage, name: 'notFound' },
 	],
 });
 
