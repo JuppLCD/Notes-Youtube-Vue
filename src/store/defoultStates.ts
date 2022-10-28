@@ -8,9 +8,8 @@ export const defaultNoteListState = {
 };
 
 // export const defaultNoteListState = {
-// 	noteListsInfo: undefined,
+// 	all: undefined,
 // 	allFull: undefined,
-//  info: undefined,
 // };
 
 // * VideoToAnalyzeState
@@ -21,18 +20,21 @@ export const defaultVideoToAnalyzeState = {
 			title: 'Title 1',
 			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam corporis iusto quos magnam. Rem ex temporibus corporis illo dicta at doloribus necessitatibus impedit natus excepturi odio hic quo, minus sit?',
 			idYTVideo: 'dada',
+			list_id: 1,
 		},
 		{
 			id: '2',
 			title: 'Title 2',
 			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam corporis iusto quos magnam. Rem ex temporibus corporis illo dicta at doloribus necessitatibus impedit natus excepturi odio hic quo, minus sit?',
 			idYTVideo: 'dada',
+			list_id: 1,
 		},
 		{
 			id: '3',
 			title: 'Title 3',
 			text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam corporis iusto quos magnam. Rem ex temporibus corporis illo dicta at doloribus necessitatibus impedit natus excepturi odio hic quo, minus sit?',
 			idYTVideo: 'dada',
+			list_id: 2,
 		},
 	],
 	idYoutubeVideo: '',

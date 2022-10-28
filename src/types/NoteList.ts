@@ -7,10 +7,6 @@ export interface NoteList {
 	user_id: number;
 }
 
-export interface NoteListInfo extends NoteList {
-	notes_id: string[];
-}
-
 export interface FullNoteList extends NoteList {
 	notes: Note[];
 }
