@@ -10,11 +10,13 @@ const emits = defineEmits<{
 </script>
 
 <template>
-	<li>
-		<h3>{{ note.title }}</h3>
-		<p>{{ note.text }}</p>
-		<Button class="mr-2" type="button"> Edit </Button>
-		<Button @click="emits('deleteNote', note.id)" color="red" type="button"> Delete </Button>
+	<li class="border-gray-200 border p-4 rounded-lg mb-2">
+		<h3 class="text-xl my-2">{{ note.title }}</h3>
+		<p class="mb-3">{{ note.text }}</p>
+		<div class="flex justify-end">
+			<Button class="mr-2" type="button"> Edit </Button>
+			<Button @click="emits('deleteNote', note.id)" color="red" type="button"> Delete </Button>
+		</div>
 	</li>
 </template>
 

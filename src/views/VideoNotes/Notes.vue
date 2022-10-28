@@ -13,8 +13,8 @@ const deleteNote = (id: string) => {
 </script>
 
 <template>
-	<section>
-		<h2>Notas</h2>
+	<section class="py-2">
+		<h2 class="text-center text-2xl my-2">Notes of the YT Video</h2>
 		<ul>
 			<CardNote v-for="note in notes" :key="note.id" :note="note" @deleteNote="deleteNote" />
 		</ul>

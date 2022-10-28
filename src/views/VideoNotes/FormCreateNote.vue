@@ -7,21 +7,30 @@ import Button from '@/components/Button.vue';
 const formInputs = ref({
 	title: 'Titulo',
 	text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius, consequatur commodi! Deserunt dolore quod porro doloremque natus omnis distinctio inventore! Consequatur quidem nisi ab iste, ipsum voluptates totam reprehenderit optio?',
-	select: 1,
+	list_id: 1,
 });
 
 const resetForm = () => {
 	formInputs.value = {
 		title: '',
 		text: '',
-		select: 1,
+		list_id: 1,
 	};
 };
 
 const store = useStoreVuex();
 
 const createNote = () => {
-	store.dispatch('videoToAnalyze/createNote', { title: formInputs.value.title, text: formInputs.value.text });
+	if (!store.state.videoToAnalyze.idYoutubeVideo) {
+		alert('No se ha seleccinado ningun video');
+		return;
+	}
+
+	store.dispatch('videoToAnalyze/createNote', {
+		title: formInputs.value.title,
+		text: formInputs.value.text,
+		list_id: formInputs.value.list_id,
+	});
 	resetForm();
 };
 
@@ -36,7 +45,7 @@ const optionsListNotes = computed(() => {
 <template>
 	<article>
 		<form @submit.prevent="createNote" class="mt-6">
-			<h3 class="text-xl text-center my-2">Create new note</h3>
+			<h3 class="text-2xl text-center my-2">Create a new note</h3>
 			<label class="block my-2 text-sm font-medium text-gray-900 dark:text-gray-400">
 				<input
 					type="text"
@@ -58,7 +67,7 @@ const optionsListNotes = computed(() => {
 			<label class="block my-3 text-sm font-medium text-gray-900 dark:text-gray-400">
 				Save to note list:
 				<select
-					v-model="formInputs.select"
+					v-model="formInputs.list_id"
 					class="mt-1 block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 				>
 					<option v-for="option in optionsListNotes" :value="option.id" :key="option.id">

@@ -5,7 +5,7 @@ import { StateInterface } from '../index';
 import type { Note } from '@/types/Note';
 
 const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
-	createNote({ commit, state }, payload: { title: string; text: string }) {
+	createNote({ commit, state }, payload: { title: string; text: string; list_id: number }) {
 		if (!state.idYoutubeVideo) {
 			alert('No se ha seleccinado ningun video');
 			return;

@@ -17,6 +17,12 @@ const sessionInputs = ref({
 
 const handleSubmit = () => {
 	console.log('submit', '==> ', sessionInputs.value);
+
+	if (sessionType.value === 'login') {
+		// TODO: Llamar un dispatch user/login
+	} else {
+		// TODO: Llamar un dispatch user/signup
+	}
 };
 </script>
 
@@ -36,6 +42,9 @@ const handleSubmit = () => {
 				>
 					Confirm password
 				</MyInput>
+				<div v-else class="my-2 text-blue-400 hover:text-purple-500">
+					<RouterLink :to="{ name: 'signup' }"> You do not have an account? Sign up </RouterLink>
+				</div>
 
 				<Button type="submit">
 					{{ sessionType === 'login' ? 'Log in' : 'Sign up' }}

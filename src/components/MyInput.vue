@@ -10,7 +10,7 @@ const { modelValue } = defineProps<FormInput>();
 
 <template>
 	<label class="block my-2 text-sm font-medium text-gray-900 dark:text-gray-400">
-		<slot />
+		<p class="mb-1"><slot /></p>
 		<input
 			v-bind="$attrs"
 			:value="modelValue"
