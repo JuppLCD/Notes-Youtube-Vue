@@ -19,15 +19,15 @@ const links = [
 		button: false,
 	},
 	{
-		title: 'Sign up',
-		text: 'Sign up',
-		to: { name: 'signup' },
-		button: true,
-	},
-	{
 		title: 'Log in',
 		text: 'Log in',
 		to: { name: 'login' },
+		button: true,
+	},
+	{
+		title: 'Sign up',
+		text: 'Sign up',
+		to: { name: 'signup' },
 		button: true,
 	},
 ];
@@ -54,9 +54,14 @@ const classLinks = {
 	<header class="bg-gray-900">
 		<div class="px-4 py-3 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
 			<div class="relative flex items-center justify-between">
-				<a href="/" :aria-label="companyName" :title="companyName" class="inline-flex items-center">
+				<RouterLink
+					:to="{ name: 'home' }"
+					:aria-label="companyName"
+					:title="companyName"
+					class="inline-flex items-center"
+				>
 					<span class="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">{{ companyName }}</span>
-				</a>
+				</RouterLink>
 				<ul class="items-center hidden space-x-8 lg:flex">
 					<li v-for="link in links" :key="link.text">
 						<RouterLink
@@ -92,7 +97,12 @@ const classLinks = {
 						<div class="p-5 bg-white border rounded shadow-sm">
 							<div class="flex items-center justify-between mb-4">
 								<div>
-									<a href="/" :aria-label="companyName" :title="companyName" class="inline-flex items-center">
+									<RouterLink
+										:to="{ name: 'home' }"
+										:aria-label="companyName"
+										:title="companyName"
+										class="inline-flex items-center"
+									>
 										<svg
 											class="w-8 text-deep-purple-accent-400"
 											viewBox="0 0 24 24"
@@ -109,7 +119,7 @@ const classLinks = {
 											<rect x="14" y="11" width="7" height="12"></rect>
 										</svg>
 										<span class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">{{ companyName }}</span>
-									</a>
+									</RouterLink>
 								</div>
 								<div>
 									<button
