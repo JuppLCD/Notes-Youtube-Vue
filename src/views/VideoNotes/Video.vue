@@ -3,6 +3,8 @@ import { useStoreVuex } from '@/store';
 import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 
+import MyInput from '@/components/MyInput.vue';
+
 const urlYoutube = ref('');
 
 const store = useStoreVuex();
@@ -14,7 +16,8 @@ const urlYoutubeEmbed = computed(() => {
 
 const generateURLYoutubeEmbed = () => {
 	if (!urlYoutube.value.includes('youtube.com/watch?v=')) {
-		return alert('URL DE YOUTUBE INVALIDA');
+		alert('URL DE YOUTUBE INVALIDA ' + urlYoutube.value);
+		return;
 	}
 	let idVideo = urlYoutube.value.split('watch?v=')[1];
 	if (idVideo.includes('&')) {
@@ -28,15 +31,18 @@ const generateURLYoutubeEmbed = () => {
 </script>
 
 <template>
-	<label>
+	<MyInput
+		type="text"
+		v-model="urlYoutube"
+		@keyup.enter="generateURLYoutubeEmbed"
+		placeholder="URL of YouTube Video..."
+	>
 		Put a youtube video url here:
-		<input type="text" v-model="urlYoutube" @keyup.enter="generateURLYoutubeEmbed" placeholder="URL" />
-	</label>
+	</MyInput>
 
 	<iframe
 		v-if="urlYoutubeEmbed"
-		width="560"
-		height="315"
+		class="video"
 		:src="urlYoutubeEmbed"
 		title="YouTube video player"
 		frameborder="0"
@@ -48,10 +54,13 @@ const generateURLYoutubeEmbed = () => {
 
 <style scoped>
 .video {
-	width: 560px;
-	height: 315px;
+	height: 320px;
+
+	width: 100%;
+	max-width: 560px;
+
 	background-color: gray;
 
-	margin: 20px 0;
+	margin: 20px auto;
 }
 </style>
