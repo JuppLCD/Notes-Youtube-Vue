@@ -47,14 +47,14 @@ export const defaultVideoToAnalyzeState = {
 
 // * UserState
 
-export const defaultUserState = {
-	isAuth: true,
-	token: 'TOKEN',
-	userId: 1,
-};
-
 // export const defaultUserState = {
-// 	isAuth: false,
-// 	token: undefined,
-// 	userId: undefined,
+// 	isAuth: true,
+// 	token: 'TOKEN',
+// 	userId: 1,
 // };
+
+export const defaultUserState = {
+	isAuth: false,
+	token: undefined,
+	userId: undefined,
+};
