@@ -1,36 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+
+import { useStoreVuex } from '@/store';
+
+import Button from './Button.vue';
+import { useRouter } from 'vue-router';
 
 const isMenuOpen = ref(false);
 
 const companyName = 'Notes-Youtube';
 
-const links = [
-	{
-		title: 'Home',
-		text: 'Home',
-		to: { name: 'home' },
-		button: false,
-	},
-	{
-		title: 'New Notes of YT video',
-		text: 'YT video notes',
-		to: { name: 'YTVideoNotes' },
-		button: false,
-	},
-	{
-		title: 'Log in',
-		text: 'Log in',
-		to: { name: 'login' },
-		button: true,
-	},
-	{
-		title: 'Sign up',
-		text: 'Sign up',
-		to: { name: 'signup' },
-		button: true,
-	},
-];
+const store = useStoreVuex();
+const isAuth = computed(() => store.state.user.isAuth);
+
+const router = useRouter();
+
+const logout = () => {
+	store.dispatch('user/logout');
+	router.push({ name: 'home' });
+};
 
 const classLinksBase = {
 	normal: 'font-medium tracking-wide transition-colors duration-200',
@@ -63,16 +51,52 @@ const classLinks = {
 					<span class="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">{{ companyName }}</span>
 				</RouterLink>
 				<ul class="items-center hidden space-x-8 lg:flex">
-					<li v-for="link in links" :key="link.text">
-						<RouterLink
-							:to="link.to"
-							:aria-label="link.title"
-							:title="link.title"
-							:class="link.button ? classLinks.desktop.button : classLinks.desktop.nomrmal"
-						>
-							{{ link.text }}
+					<li>
+						<RouterLink :to="{ name: 'home' }" aria-label="Home" title="Home" :class="classLinks.desktop.nomrmal">
+							Home
 						</RouterLink>
 					</li>
+					<li>
+						<RouterLink
+							:to="{ name: 'YTVideoNotes' }"
+							aria-label="New Notes of YT video"
+							title="New Notes of YT video"
+							:class="classLinks.desktop.nomrmal"
+						>
+							YT video notes
+						</RouterLink>
+					</li>
+
+					<template v-if="!isAuth">
+						<li>
+							<RouterLink :to="{ name: 'login' }" aria-label="Log in" title="Log in" :class="classLinks.desktop.button">
+								Log in
+							</RouterLink>
+						</li>
+						<li>
+							<RouterLink
+								:to="{ name: 'signup' }"
+								aria-label="Sign up"
+								title="Sign up"
+								:class="classLinks.desktop.button"
+							>
+								Sign up
+							</RouterLink>
+						</li>
+					</template>
+					<template v-else>
+						<li>
+							<Button
+								aria-label="Logout"
+								title="Logout"
+								:class="classLinks.desktop.button"
+								color="red"
+								@click="logout()"
+							>
+								Logout
+							</Button>
+						</li>
+					</template>
 				</ul>
 				<div class="lg:hidden">
 					<button
@@ -139,16 +163,62 @@ const classLinks = {
 							</div>
 							<nav>
 								<ul class="space-y-4">
-									<li v-for="link in links" :key="link.text">
+									<li>
 										<RouterLink
-											:to="link.to"
-											:aria-label="link.title"
-											:title="link.title"
-											:class="link.button ? classLinks.mobile.button : classLinks.mobile.nomrmal"
+											:to="{ name: 'home' }"
+											aria-label="Home"
+											title="Home"
+											:class="classLinks.mobile.nomrmal"
 										>
-											{{ link.text }}
+											Home
 										</RouterLink>
 									</li>
+									<li>
+										<RouterLink
+											:to="{ name: 'YTVideoNotes' }"
+											aria-label="New Notes of YT video"
+											title="New Notes of YT video"
+											:class="classLinks.mobile.nomrmal"
+										>
+											YT video notes
+										</RouterLink>
+									</li>
+
+									<template v-if="!isAuth">
+										<li>
+											<RouterLink
+												:to="{ name: 'login' }"
+												aria-label="Log in"
+												title="Log in"
+												:class="classLinks.mobile.button"
+											>
+												Log in
+											</RouterLink>
+										</li>
+										<li>
+											<RouterLink
+												:to="{ name: 'signup' }"
+												aria-label="Sign up"
+												title="Sign up"
+												:class="classLinks.mobile.button"
+											>
+												Sign up
+											</RouterLink>
+										</li>
+									</template>
+									<template v-else>
+										<li>
+											<Button
+												aria-label="Logout"
+												title="Logout"
+												:class="classLinks.mobile.button"
+												color="red"
+												@click="logout()"
+											>
+												Logout
+											</Button>
+										</li>
+									</template>
 								</ul>
 							</nav>
 						</div>
