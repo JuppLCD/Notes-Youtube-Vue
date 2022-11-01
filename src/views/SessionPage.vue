@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useStoreVuex } from '@/store';
 
 import Button from '@/components/Button.vue';
@@ -8,6 +8,7 @@ import Container from '@/components/Container.vue';
 import MyInput from '@/components/MyInput.vue';
 
 const route = useRoute();
+const router = useRouter();
 const sessionType = computed(() => route.name as 'signup' | 'login');
 
 const sessionInputs = ref({
@@ -32,6 +33,8 @@ const handleSubmit = () => {
 			confirmPassword: sessionInputs.value.confirmPassword,
 		});
 	}
+
+	router.push({ name: 'YTVideoNotes' });
 };
 </script>
 
