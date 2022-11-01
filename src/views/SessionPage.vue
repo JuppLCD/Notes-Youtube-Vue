@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useStoreVuex } from '@/store';
 
 import Button from '@/components/Button.vue';
 import Container from '@/components/Container.vue';
@@ -15,13 +16,21 @@ const sessionInputs = ref({
 	confirmPassword: '',
 });
 
-const handleSubmit = () => {
-	console.log('submit', '==> ', sessionInputs.value);
+const store = useStoreVuex();
 
+const handleSubmit = () => {
+	// ! Tengo que hacer validaciones
 	if (sessionType.value === 'login') {
-		// TODO: Llamar un dispatch user/login
+		store.dispatch('user/loginCredentials', {
+			username: sessionInputs.value.username,
+			password: sessionInputs.value.password,
+		});
 	} else {
-		// TODO: Llamar un dispatch user/signup
+		store.dispatch('user/loginCredentials', {
+			username: sessionInputs.value.username,
+			password: sessionInputs.value.password,
+			confirmPassword: sessionInputs.value.confirmPassword,
+		});
 	}
 };
 </script>
