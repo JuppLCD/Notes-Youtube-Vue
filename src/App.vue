@@ -5,6 +5,7 @@ import Header from './components/Header.vue';
 <template>
 	<Header />
 	<RouterView />
+	<notifications position="top center" />
 </template>
 
 <style scoped></style>
