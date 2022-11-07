@@ -4,10 +4,18 @@ import { StateInterface } from '../index';
 
 import type { Note } from '@/types/Note';
 
+import { notify } from '@kyvg/vue3-notification';
+
 const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 	createNote({ commit, state }, payload: { title: string; text: string; list_id: number }) {
 		if (!state.idYoutubeVideo) {
-			alert('No se ha seleccinado ningun video');
+			notify({
+				type: 'error',
+				duration: 3000,
+				speed: 1000,
+				title: 'Error',
+				text: "Can't create a note without the video url",
+			});
 			return;
 		}
 
@@ -18,6 +26,12 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			idYTVideo: state.idYoutubeVideo,
 		};
 
+		notify({
+			type: 'success',
+			duration: 3000,
+			speed: 1000,
+			title: 'Success creating a new note',
+		});
 		commit('addNote', newNote);
 	},
 	deleteNote({ commit, state }, payload: { id: string }) {
@@ -27,6 +41,14 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			return;
 		}
 
+		// TODO: fetch DELETE :id
+
+		notify({
+			type: 'success',
+			duration: 3000,
+			speed: 1000,
+			title: 'Deleted note',
+		});
 		commit('deleteNote', { id: payload.id });
 	},
 };

@@ -4,6 +4,8 @@ import { StateInterface } from '../index';
 
 import { TOKEN_KEY_LOCAL_STORAGE } from '@/config';
 
+import { notify } from '@kyvg/vue3-notification';
+
 const actions: ActionTree<UserStateInterface, StateInterface> = {
 	loginCredentials(
 		{ commit },
@@ -16,6 +18,12 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
 		const res = { userId: 1, token: 'TOKEN' };
 		if (res.token) {
+			notify({
+				type: 'success',
+				duration: 3000,
+				speed: 1000,
+				title: 'Successfully logged in',
+			});
 			commit('connectedUser', { token: res.token, userId: res.userId });
 		} else {
 		}
@@ -32,6 +40,12 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
 		const res = { userId: 1, token: 'TOKEN' };
 		if (res.token) {
+			notify({
+				type: 'success',
+				duration: 3000,
+				speed: 1000,
+				title: 'Successfully sign up',
+			});
 			commit('connectedUser', { token: res.token, userId: res.userId });
 		} else {
 		}
@@ -49,6 +63,13 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
 	logout({ commit }) {
 		localStorage.removeItem(TOKEN_KEY_LOCAL_STORAGE);
+
+		notify({
+			type: 'success',
+			duration: 3000,
+			speed: 1000,
+			title: 'Successfully logout',
+		});
 		commit('logout');
 	},
 };

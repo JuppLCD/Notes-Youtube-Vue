@@ -2,10 +2,13 @@
 import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStoreVuex } from '@/store';
+import { useNotification } from '@kyvg/vue3-notification';
 
 import Button from '@/components/Button.vue';
 import Container from '@/components/Container.vue';
 import MyInput from '@/components/MyInput.vue';
+
+const { notify } = useNotification();
 
 const route = useRoute();
 const router = useRouter();
@@ -21,13 +24,14 @@ const store = useStoreVuex();
 
 const handleSubmit = () => {
 	// ! Tengo que hacer validaciones
+	// notify({type:'error', title:'Error'})
 	if (sessionType.value === 'login') {
 		store.dispatch('user/loginCredentials', {
 			username: sessionInputs.value.username,
 			password: sessionInputs.value.password,
 		});
 	} else {
-		store.dispatch('user/loginCredentials', {
+		store.dispatch('user/signup', {
 			username: sessionInputs.value.username,
 			password: sessionInputs.value.password,
 			confirmPassword: sessionInputs.value.confirmPassword,

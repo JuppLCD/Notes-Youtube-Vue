@@ -3,9 +3,13 @@ import { useStoreVuex } from '@/store';
 import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 
+import { useNotification } from '@kyvg/vue3-notification';
+
 import MyInput from '@/components/MyInput.vue';
 
-const urlYoutube = ref('');
+const { notify } = useNotification();
+
+const urlYoutube = ref('https://www.youtube.com/watch?v=N9VE1NEavjc');
 
 const store = useStoreVuex();
 
@@ -16,7 +20,11 @@ const urlYoutubeEmbed = computed(() => {
 
 const generateURLYoutubeEmbed = () => {
 	if (!urlYoutube.value.includes('youtube.com/watch?v=')) {
-		alert('URL DE YOUTUBE INVALIDA ' + urlYoutube.value);
+		notify({
+			title: 'Error',
+			text: `Invalid youtube url ${urlYoutube.value}`,
+			type: 'error',
+		});
 		return;
 	}
 	let idVideo = urlYoutube.value.split('watch?v=')[1];
