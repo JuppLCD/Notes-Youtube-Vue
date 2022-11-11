@@ -6,58 +6,72 @@ import { TOKEN_KEY_LOCAL_STORAGE } from '@/config';
 
 import { notify } from '@kyvg/vue3-notification';
 
+import { loginWhitCredentials, register, validToken } from '@/services/user';
+
+import type { LoginCredentialsInterface, RegisterCredentialsInterface } from '@/types/User';
+
 const actions: ActionTree<UserStateInterface, StateInterface> = {
-	loginCredentials(
-		{ commit },
-		payload: {
-			username: string;
-			password: string;
-		}
-	) {
-		// TODO: BACKEND LOGIN POST
-
-		const res = { userId: 1, token: 'TOKEN' };
-		if (res.token) {
+	async loginCredentials({ commit }, payload: LoginCredentialsInterface) {
+		try {
+			const data = await loginWhitCredentials(payload);
+			if (data?.accessToken) {
+				notify({
+					type: 'success',
+					duration: 3000,
+					speed: 1000,
+					title: 'Successfully logged in',
+				});
+				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
+			} else {
+				throw new Error('Unauthorized');
+			}
+		} catch (err) {
+			console.error(err);
 			notify({
-				type: 'success',
+				type: 'error',
 				duration: 3000,
 				speed: 1000,
-				title: 'Successfully logged in',
+				title: 'Unauthorized',
 			});
-			commit('connectedUser', { token: res.token, userId: res.userId });
-		} else {
 		}
 	},
-	signup(
-		{ commit },
-		payload: {
-			username: string;
-			password: string;
-			confirmPassword: string;
-		}
-	) {
-		// TODO: BACKEND SINGUP POST
-
-		const res = { userId: 1, token: 'TOKEN' };
-		if (res.token) {
+	async signup({ commit }, payload: RegisterCredentialsInterface) {
+		try {
+			const data = await register(payload);
+			if (data?.accessToken) {
+				notify({
+					type: 'success',
+					duration: 3000,
+					speed: 1000,
+					title: 'Successfully sign up',
+				});
+				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
+			} else {
+				throw new Error('User registration error');
+			}
+		} catch (err) {
+			console.error(err);
 			notify({
-				type: 'success',
+				type: 'error',
 				duration: 3000,
 				speed: 1000,
-				title: 'Successfully sign up',
+				title: 'User registration error',
 			});
-			commit('connectedUser', { token: res.token, userId: res.userId });
-		} else {
 		}
 	},
-	loginToken({ commit }) {
+	async loginToken({ commit }) {
 		const token = localStorage.getItem(TOKEN_KEY_LOCAL_STORAGE);
 		if (!token) return;
 
-		// TODO: veriricar token
-		const res = { authorizedToken: true, userId: 1 };
-		if (res.authorizedToken) {
-			commit('connectedUser', { token: token, userId: res.userId });
+		try {
+			const data = await validToken(token);
+			if (data?.accessToken) {
+				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
+			} else {
+				throw new Error('Invalid token');
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	},
 

@@ -15,8 +15,9 @@ const router = useRouter();
 const sessionType = computed(() => route.name as 'signup' | 'login');
 
 const sessionInputs = ref({
-	username: '',
-	password: '',
+	email: 'test@example.com',
+	name: '',
+	password: 'password',
 	confirmPassword: '',
 });
 
@@ -27,12 +28,13 @@ const handleSubmit = () => {
 	// notify({type:'error', title:'Error'})
 	if (sessionType.value === 'login') {
 		store.dispatch('user/loginCredentials', {
-			username: sessionInputs.value.username,
+			email: sessionInputs.value.email,
 			password: sessionInputs.value.password,
 		});
 	} else {
 		store.dispatch('user/signup', {
-			username: sessionInputs.value.username,
+			email: sessionInputs.value.email,
+			name: sessionInputs.value.name,
 			password: sessionInputs.value.password,
 			confirmPassword: sessionInputs.value.confirmPassword,
 		});
@@ -46,18 +48,16 @@ const handleSubmit = () => {
 	<main>
 		<Container>
 			<form @submit.prevent="handleSubmit">
-				<MyInput type="text" placeholder="userExample" v-model="sessionInputs.username"> UserName </MyInput>
+				<MyInput type="email" placeholder="example@example.com" v-model="sessionInputs.email"> Email </MyInput>
 
 				<MyInput type="password" placeholder="******" v-model="sessionInputs.password"> Password </MyInput>
 
-				<MyInput
-					v-if="sessionType === 'signup'"
-					type="password"
-					placeholder="******"
-					v-model="sessionInputs.confirmPassword"
-				>
-					Confirm password
-				</MyInput>
+				<template v-if="sessionType === 'signup'">
+					<MyInput type="text" placeholder="userExample" v-model="sessionInputs.name"> UserName </MyInput>
+					<MyInput type="password" placeholder="******" v-model="sessionInputs.confirmPassword">
+						Confirm password
+					</MyInput>
+				</template>
 				<div v-else class="my-2 text-blue-400 hover:text-purple-500">
 					<RouterLink :to="{ name: 'signup' }"> You do not have an account? Sign up </RouterLink>
 				</div>

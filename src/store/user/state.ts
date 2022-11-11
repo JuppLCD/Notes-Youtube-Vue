@@ -4,6 +4,7 @@ export interface UserStateInterface {
 	isAuth: boolean;
 	token?: string;
 	userId?: number;
+	userName?: string;
 }
 
 function state(): UserStateInterface {
