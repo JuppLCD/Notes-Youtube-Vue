@@ -1,4 +1,4 @@
-import { URL_API_BACKEND } from '@/config';
+import { API_ROUTE_USER_LOGIN, API_ROUTE_USER_REGISTER, API_ROUTE_USER_VALID_TOKEN } from '@/config';
 
 import type {
 	DataResponseCredentialsInterface,
@@ -7,7 +7,7 @@ import type {
 } from '@/types/User';
 
 export async function loginWhitCredentials(loginCredentials: LoginCredentialsInterface) {
-	const res = await fetch(URL_API_BACKEND + '/login', {
+	const res = await fetch(API_ROUTE_USER_LOGIN, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export async function loginWhitCredentials(loginCredentials: LoginCredentialsInt
 }
 
 export async function register(registerCredetials: RegisterCredentialsInterface) {
-	const res = await fetch(URL_API_BACKEND + '/register', {
+	const res = await fetch(API_ROUTE_USER_REGISTER, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -39,8 +39,8 @@ export async function register(registerCredetials: RegisterCredentialsInterface)
 }
 
 export async function validToken(token: string) {
-	const res = await fetch(URL_API_BACKEND + '/valid_token', {
-		method: 'get',
+	const res = await fetch(API_ROUTE_USER_VALID_TOKEN, {
+		method: 'GET',
 		headers: {
 			Accept: 'application/json',
 			Authorization: `Bearer ${token}`,
