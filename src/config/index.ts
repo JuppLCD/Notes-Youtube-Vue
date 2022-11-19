@@ -1,4 +1,4 @@
 const TOKEN_KEY_LOCAL_STORAGE = 'accessToken';
 
-export * from './apiBackendRoutes';
+export * from './apiBackendPath';
 export { TOKEN_KEY_LOCAL_STORAGE };

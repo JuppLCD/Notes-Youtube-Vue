@@ -1,4 +1,4 @@
-import { API_ROUTE_USER_LOGIN, API_ROUTE_USER_REGISTER, API_ROUTE_USER_VALID_TOKEN } from '@/config';
+import { API_PATH_USER_LOGIN, API_PATH_USER_REGISTER, API_PATH_USER_VALID_TOKEN } from '@/config';
 
 import type {
 	DataResponseCredentialsInterface,
@@ -6,49 +6,40 @@ import type {
 	RegisterCredentialsInterface,
 } from '@/types/User';
 
-export async function loginWhitCredentials(loginCredentials: LoginCredentialsInterface) {
-	const res = await fetch(API_ROUTE_USER_LOGIN, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-		},
-		body: JSON.stringify(loginCredentials),
-	});
+import { apiAxiosInstance } from './axios';
 
-	if (res.ok) {
-		const data = await res.json();
-		return data as DataResponseCredentialsInterface;
-	}
+class UserService {
+	loginWhitCredentials = async (loginCredentials: LoginCredentialsInterface) => {
+		const res = await apiAxiosInstance.post<DataResponseCredentialsInterface>(API_PATH_USER_LOGIN, loginCredentials);
+
+		if (res.status === 200) {
+			const data = res.data;
+			return data;
+		}
+	};
+
+	register = async (registerCredetials: RegisterCredentialsInterface) => {
+		const res = await apiAxiosInstance.post<DataResponseCredentialsInterface>(
+			API_PATH_USER_REGISTER,
+			registerCredetials
+		);
+
+		if (res.status === 200) {
+			const data = res.data;
+			return data;
+		}
+	};
+
+	validToken = async (token: string) => {
+		const res = await apiAxiosInstance.get<DataResponseCredentialsInterface>(API_PATH_USER_VALID_TOKEN, {
+			headers: { Authorization: token },
+		});
+
+		if (res.status === 200) {
+			const data = res.data;
+			return data;
+		}
+	};
 }
 
-export async function register(registerCredetials: RegisterCredentialsInterface) {
-	const res = await fetch(API_ROUTE_USER_REGISTER, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-		},
-		body: JSON.stringify(registerCredetials),
-	});
-
-	if (res.ok) {
-		const data = await res.json();
-		return data as DataResponseCredentialsInterface;
-	}
-}
-
-export async function validToken(token: string) {
-	const res = await fetch(API_ROUTE_USER_VALID_TOKEN, {
-		method: 'GET',
-		headers: {
-			Accept: 'application/json',
-			Authorization: `Bearer ${token}`,
-		},
-	});
-
-	if (res.ok) {
-		const data = await res.json();
-		return data as DataResponseCredentialsInterface;
-	}
-}
+export const userService = new UserService();

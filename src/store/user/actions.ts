@@ -6,14 +6,14 @@ import { TOKEN_KEY_LOCAL_STORAGE } from '@/config';
 
 import { notify } from '@kyvg/vue3-notification';
 
-import { loginWhitCredentials, register, validToken } from '@/services/user';
+import { userService } from '@/services/user';
 
 import type { LoginCredentialsInterface, RegisterCredentialsInterface } from '@/types/User';
 
 const actions: ActionTree<UserStateInterface, StateInterface> = {
 	async loginCredentials({ commit }, payload: LoginCredentialsInterface) {
 		try {
-			const data = await loginWhitCredentials(payload);
+			const data = await userService.loginWhitCredentials(payload);
 			if (data?.accessToken) {
 				notify({
 					type: 'success',
@@ -37,7 +37,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 	},
 	async signup({ commit }, payload: RegisterCredentialsInterface) {
 		try {
-			const data = await register(payload);
+			const data = await userService.register(payload);
 			if (data?.accessToken) {
 				notify({
 					type: 'success',
@@ -64,7 +64,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 		if (!token) return;
 
 		try {
-			const data = await validToken(token);
+			const data = await userService.validToken(token);
 			if (data?.accessToken) {
 				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
 			} else {
