@@ -1,9 +1,12 @@
 import { Note } from './Note';
 
-export interface NoteList {
-	id: number;
+export interface BasicNoteList {
 	name: string;
 	description: string;
+}
+
+export interface NoteList extends BasicNoteList {
+	id: number;
 	user_id: number;
 }
 
