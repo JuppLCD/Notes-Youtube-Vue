@@ -10,7 +10,7 @@ const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 		}
 		state.notes.push(payload);
 	},
-	deleteNote(state, payload: { id: string }) {
+	deleteNote(state, payload: { id: number }) {
 		state.notes = state.notes?.filter((note) => note.id !== payload.id);
 	},
 	setIdYoutubeVideo(state, idVideo: string) {

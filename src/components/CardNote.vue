@@ -5,7 +5,7 @@ import Button from '@/components/Button.vue';
 
 const { note } = defineProps<{ note: Note }>();
 const emits = defineEmits<{
-	(e: 'deleteNote', id: string): void;
+	(e: 'deleteNote', id: number): void;
 }>();
 </script>
 

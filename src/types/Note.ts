@@ -5,6 +5,6 @@ export interface BasicNote {
 }
 
 export interface Note extends BasicNote {
-	id: string;
-	list_id: number;
+	id: number;
+	lists: { id: number; title: string }[];
 }

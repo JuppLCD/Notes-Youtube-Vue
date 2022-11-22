@@ -7,7 +7,7 @@ import CardNote from '@/components/CardNote.vue';
 const store = useStoreVuex();
 const notes = computed(() => store.state.videoToAnalyze.notes);
 
-const deleteNote = (id: string) => {
+const deleteNote = (id: number): void => {
 	store.dispatch('videoToAnalyze/deleteNote', { id });
 };
 </script>
