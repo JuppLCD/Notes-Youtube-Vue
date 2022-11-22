@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { apiAuthAxiosInstance } from './axios';
 
 import {
@@ -12,23 +11,19 @@ import {
 
 import { replacePramasFromUrl } from './utils';
 
-import type { BasicNoteList, NoteList } from '@/types/NoteList';
+import type { BasicNoteList, FullNoteList, NoteList } from '@/types/NoteList';
 import type { AxiosError } from 'axios';
 
 class NoteListServices {
 	getAll = async () => {
 		try {
-			const res = await apiAuthAxiosInstance.get<NoteList[]>(API_PATH_NOTE_LIST_GET_ALL);
+			const res = await apiAuthAxiosInstance.get<FullNoteList[]>(API_PATH_NOTE_LIST_GET_ALL);
 
 			return res.data;
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 
@@ -36,17 +31,13 @@ class NoteListServices {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTE_LIST_GET_BY_ID, { [noteListId]: API_REPLACE_PARAMS.noteListId });
 
-			const res = await apiAuthAxiosInstance.get<NoteList>(url);
+			const res = await apiAuthAxiosInstance.get<FullNoteList>(url);
 
 			return res.data;
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 
@@ -58,11 +49,7 @@ class NoteListServices {
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 
@@ -75,11 +62,7 @@ class NoteListServices {
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 
@@ -92,11 +75,7 @@ class NoteListServices {
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 
@@ -109,11 +88,7 @@ class NoteListServices {
 		} catch (err) {
 			console.error(err);
 			const error = err as Error | AxiosError;
-
-			if (axios.isAxiosError(error)) {
-				return error.response;
-			}
-			return error.message;
+			return error;
 		}
 	};
 }

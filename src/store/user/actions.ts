@@ -4,9 +4,8 @@ import { StateInterface } from '../index';
 
 import { TOKEN_KEY_LOCAL_STORAGE } from '@/config';
 
-import { notify } from '@kyvg/vue3-notification';
-
 import { userService } from '@/services/user';
+import { notifications } from '@/utils/Notifications';
 
 import type { LoginCredentialsInterface, RegisterCredentialsInterface } from '@/types/User';
 
@@ -15,48 +14,29 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 		try {
 			const data = await userService.loginWhitCredentials(payload);
 			if (data?.accessToken) {
-				notify({
-					type: 'success',
-					duration: 3000,
-					speed: 1000,
-					title: 'Successfully logged in',
-				});
+				notifications.succes({ title: 'Successfully logged in' });
 				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
 			} else {
 				throw new Error('Unauthorized');
 			}
 		} catch (err) {
 			console.error(err);
-			notify({
-				type: 'error',
-				duration: 3000,
-				speed: 1000,
-				title: 'Unauthorized',
-			});
+			notifications.error({ title: 'Unauthorized' });
 		}
 	},
 	async signup({ commit }, payload: RegisterCredentialsInterface) {
 		try {
 			const data = await userService.register(payload);
 			if (data?.accessToken) {
-				notify({
-					type: 'success',
-					duration: 3000,
-					speed: 1000,
-					title: 'Successfully sign up',
-				});
+				notifications.succes({ title: 'Successfully sign up' });
 				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
 			} else {
 				throw new Error('User registration error');
 			}
 		} catch (err) {
 			console.error(err);
-			notify({
-				type: 'error',
-				duration: 3000,
-				speed: 1000,
-				title: 'User registration error',
-			});
+
+			notifications.error({ title: 'User registration error' });
 		}
 	},
 	async loginToken({ commit }) {
@@ -77,13 +57,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 
 	logout({ commit }) {
 		localStorage.removeItem(TOKEN_KEY_LOCAL_STORAGE);
-
-		notify({
-			type: 'success',
-			duration: 3000,
-			speed: 1000,
-			title: 'Successfully logout',
-		});
+		notifications.succes({ title: 'Successfully logout' });
 		commit('logout');
 	},
 };

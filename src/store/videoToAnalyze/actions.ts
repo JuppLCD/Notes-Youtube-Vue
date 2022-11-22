@@ -2,53 +2,48 @@ import { ActionTree } from 'vuex';
 import { VideoToAnalyzeStateInterface } from './state';
 import { StateInterface } from '../index';
 
+import { noteServices } from '@/services/note';
+import { notifications } from '@/utils/Notifications';
+
 import type { Note } from '@/types/Note';
 
-import { notify } from '@kyvg/vue3-notification';
-
 const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
-	createNote({ commit, state }, payload: { title: string; text: string; list_id: number }) {
+	async createNote({ commit, state }, payload: { title: string; text: string; list_id: number }) {
 		if (!state.idYoutubeVideo) {
-			notify({
-				type: 'error',
-				duration: 3000,
-				speed: 1000,
-				title: 'Error',
-				text: "Can't create a note without the video url",
-			});
+			notifications.error({ title: 'Error', text: "Can't create a note without the video url" });
 			return;
 		}
 
-		const id = String(new Date().getTime());
-		const newNote: Note = {
-			...payload,
-			id,
-			idYTVideo: state.idYoutubeVideo,
-		};
+		const data = await noteServices.create(
+			{ title: payload.title, text: payload.text, idYTVideo: state.idYoutubeVideo },
+			payload.list_id
+		);
 
-		notify({
-			type: 'success',
-			duration: 3000,
-			speed: 1000,
-			title: 'Success creating a new note',
-		});
+		console.log(typeof data, '<-- type of -->', data);
+
+		const isOk = notifications.errorService<Note>(data);
+		if (!isOk) return;
+
+		const newNote = data as Note;
+
+		notifications.succes({ title: 'Success creating a new note' });
+
 		commit('addNote', newNote);
 	},
-	deleteNote({ commit, state }, payload: { id: string }) {
+	async deleteNote({ commit, state }, payload: { id: number }) {
 		const isNote = state.notes?.some((note) => note.id === payload.id);
 		if (!isNote) {
 			console.error('Error: no se encuentra ninguna nota que posea dicho id ->' + payload.id);
 			return;
 		}
 
-		// TODO: fetch DELETE :id
+		const data = await noteServices.delete(payload.id);
 
-		notify({
-			type: 'success',
-			duration: 3000,
-			speed: 1000,
-			title: 'Deleted note',
-		});
+		const isOk = notifications.errorService<Note>(data);
+		if (!isOk) return;
+
+		notifications.succes({ title: 'Deleted note' });
+
 		commit('deleteNote', { id: payload.id });
 	},
 };
