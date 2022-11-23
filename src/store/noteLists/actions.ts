@@ -2,20 +2,36 @@ import { ActionTree } from 'vuex';
 import { NoteListsStateInterface } from './state';
 import { StateInterface } from '../index';
 
+import { noteListServices } from '@/services/noteList';
+import { notifications } from '@/utils/Notifications';
+
+import type { FullNoteList, NoteList } from '@/types/NoteList';
+
 const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
-	// someAction({ commit }, payload) {
-	// a line to prevent linter errors
-	// },
-	getNoteLists({ commit }) {
-		// TODO: Get all NOTELISTS of user
+	async getAll({ commit }) {
+		try {
+			const data = await noteListServices.getAll();
 
-		const resExample = [
-			{ name: 'All Notes (default)', id: 1, user_id: 1, description: '' },
-			{ name: 'Programming', id: 2, user_id: 1, description: '' },
-			{ name: 'Maths', id: 3, user_id: 1, description: '' },
-		];
+			const isOk = notifications.errorService<NoteList[]>(data);
+			if (!isOk) return;
 
-		commit('setNoteLists', { all: resExample });
+			commit('setAll', { all: data });
+		} catch (err) {
+			console.error(err);
+		}
+	},
+
+	async getAllFull({ commit }) {
+		try {
+			const data = await noteListServices.getAllFull();
+
+			const isOk = notifications.errorService<FullNoteList[]>(data);
+			if (!isOk) return;
+
+			commit('setAllFull', { allFull: data });
+		} catch (err) {
+			console.error(err);
+		}
 	},
 };
 

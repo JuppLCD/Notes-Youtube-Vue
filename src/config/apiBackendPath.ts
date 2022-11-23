@@ -25,6 +25,7 @@ export const API_PATH_NOTES_REMOVE_FROM_NOTE_LIST = '/notes/{:noteId}/lists/{:no
 
 // NOTE LIST
 export const API_PATH_NOTE_LIST_GET_ALL = '/lists';
+export const API_PATH_NOTE_LIST_GET_ALL_FULL = '/lists_full';
 export const API_PATH_NOTE_LIST_GET_BY_ID = '/lists/{:noteListId}';
 export const API_PATH_NOTE_LIST_CREATE = '/lists';
 export const API_PATH_NOTE_LIST_UPDATE = '/lists/{:noteListId}';

@@ -14,21 +14,25 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			return;
 		}
 
-		const data = await noteServices.create(
-			{ title: payload.title, text: payload.text, idYTVideo: state.idYoutubeVideo },
-			payload.list_id
-		);
+		try {
+			const data = await noteServices.create(
+				{ title: payload.title, text: payload.text, idYTVideo: state.idYoutubeVideo },
+				payload.list_id
+			);
 
-		console.log(typeof data, '<-- type of -->', data);
+			console.log(typeof data, '<-- type of -->', data);
 
-		const isOk = notifications.errorService<Note>(data);
-		if (!isOk) return;
+			const isOk = notifications.errorService<Note>(data);
+			if (!isOk) return;
 
-		const newNote = data as Note;
+			const newNote = data as Note;
 
-		notifications.succes({ title: 'Success creating a new note' });
+			notifications.succes({ title: 'Success creating a new note' });
 
-		commit('addNote', newNote);
+			commit('addNote', newNote);
+		} catch (err) {
+			console.error(err);
+		}
 	},
 	async deleteNote({ commit, state }, payload: { id: number }) {
 		const isNote = state.notes?.some((note) => note.id === payload.id);
@@ -37,14 +41,18 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			return;
 		}
 
-		const data = await noteServices.delete(payload.id);
+		try {
+			const data = await noteServices.delete(payload.id);
 
-		const isOk = notifications.errorService<Note>(data);
-		if (!isOk) return;
+			const isOk = notifications.errorService<Note>(data);
+			if (!isOk) return;
 
-		notifications.succes({ title: 'Deleted note' });
+			notifications.succes({ title: 'Deleted note' });
 
-		commit('deleteNote', { id: payload.id });
+			commit('deleteNote', { id: payload.id });
+		} catch (err) {
+			console.error(err);
+		}
 	},
 };
 

@@ -36,7 +36,7 @@ const createNote = () => {
 
 const optionsListNotes = computed(() => {
 	if (store.state.noteLists.all === undefined) {
-		store.dispatch('noteLists/getNoteLists');
+		store.dispatch('noteLists/getAll');
 	}
 	return store.state.noteLists.all;
 });

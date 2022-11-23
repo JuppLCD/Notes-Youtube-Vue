@@ -4,6 +4,7 @@ import {
 	API_PATH_NOTE_LIST_CREATE,
 	API_PATH_NOTE_LIST_DELETE,
 	API_PATH_NOTE_LIST_GET_ALL,
+	API_PATH_NOTE_LIST_GET_ALL_FULL,
 	API_PATH_NOTE_LIST_GET_BY_ID,
 	API_PATH_NOTE_LIST_UPDATE,
 	API_REPLACE_PARAMS,
@@ -17,7 +18,19 @@ import type { AxiosError } from 'axios';
 class NoteListServices {
 	getAll = async () => {
 		try {
-			const res = await apiAuthAxiosInstance.get<FullNoteList[]>(API_PATH_NOTE_LIST_GET_ALL);
+			const res = await apiAuthAxiosInstance.get<NoteList[]>(API_PATH_NOTE_LIST_GET_ALL);
+
+			return res.data;
+		} catch (err) {
+			console.error(err);
+			const error = err as Error | AxiosError;
+			return error;
+		}
+	};
+
+	getAllFull = async () => {
+		try {
+			const res = await apiAuthAxiosInstance.get<FullNoteList[]>(API_PATH_NOTE_LIST_GET_ALL_FULL);
 
 			return res.data;
 		} catch (err) {
