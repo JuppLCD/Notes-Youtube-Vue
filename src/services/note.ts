@@ -44,7 +44,7 @@ export class NoteServices extends AxiosAuthInstance {
 		}
 	};
 
-	getByIdYTVideo = async (idYTVideo: number) => {
+	getByIdYTVideo = async (idYTVideo: string) => {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTES_GET_BY_ID_YT_VIDEO, {
 				[idYTVideo]: API_REPLACE_PARAMS.idYTVideo,

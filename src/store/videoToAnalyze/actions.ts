@@ -57,6 +57,30 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
+	async getNotesByIdYoutubeVideo({ commit, state, rootState }, payload?: { idVideo: string }) {
+		const idYoutubeVideo = state.idYoutubeVideo || payload?.idVideo;
+
+		if (!idYoutubeVideo) {
+			return;
+		}
+
+		const noteServices = new NoteServices(rootState.user.token as string);
+		try {
+			const data = await noteServices.getByIdYTVideo(idYoutubeVideo);
+			const isOk = notifications.errorService<Note[]>(data);
+			if (!isOk) return;
+
+			const notesByIdYoutubeVideo = data as Note[];
+
+			commit('setNotesByIdYoutubeVideo', notesByIdYoutubeVideo);
+		} catch (err) {
+			console.error(err);
+		}
+	},
+	async setIdYoutubeVideo({ commit, dispatch }, payload: { idVideo: string }) {
+		commit('setIdYoutubeVideo', payload.idVideo);
+		dispatch('getNotesByIdYoutubeVideo', payload);
+	},
 };
 
 export default actions;

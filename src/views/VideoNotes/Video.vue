@@ -34,7 +34,7 @@ const generateURLYoutubeEmbed = () => {
 		idVideo = idVideo.split('?')[0];
 	}
 
-	store.commit('videoToAnalyze/setIdYoutubeVideo', idVideo);
+	store.dispatch('videoToAnalyze/setIdYoutubeVideo', { idVideo });
 };
 </script>
 

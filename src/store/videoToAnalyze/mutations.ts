@@ -16,6 +16,9 @@ const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 	setIdYoutubeVideo(state, idVideo: string) {
 		state.idYoutubeVideo = idVideo;
 	},
+	setNotesByIdYoutubeVideo(state, payload: Note[]) {
+		state.notes = payload;
+	},
 };
 
 export default mutation;
