@@ -32,7 +32,7 @@ class UserService {
 
 	validToken = async (token: string) => {
 		const res = await apiAxiosInstance.get<DataResponseCredentialsInterface>(API_PATH_USER_VALID_TOKEN, {
-			headers: { Authorization: token },
+			headers: { Authorization: `Bearer ${token}` },
 		});
 
 		if (res.status === 200) {
