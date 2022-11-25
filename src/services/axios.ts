@@ -1,12 +1,6 @@
-import { computed } from 'vue';
-import axios from 'axios';
-
-import { useStoreVuex } from '@/store';
+import axios, { AxiosInstance } from 'axios';
 
 import { URL_API_BACKEND } from '@/config';
-
-const store = useStoreVuex();
-const token = computed(() => store.state.user.token);
 
 // API Backend Instances
 export const apiAxiosInstance = axios.create({
@@ -14,7 +8,13 @@ export const apiAxiosInstance = axios.create({
 	headers: { Accept: 'application/json' },
 });
 
-export const apiAuthAxiosInstance = axios.create({
-	baseURL: URL_API_BACKEND,
-	headers: { Accept: 'application/json', Authorization: `Bearer ${token.value}` },
-});
+export class AxiosAuthInstance {
+	protected apiAuthAxiosInstance: AxiosInstance;
+
+	constructor(token: string) {
+		this.apiAuthAxiosInstance = axios.create({
+			baseURL: URL_API_BACKEND,
+			headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+		});
+	}
+}

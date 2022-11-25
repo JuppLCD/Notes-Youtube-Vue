@@ -2,17 +2,19 @@ import { ActionTree } from 'vuex';
 import { VideoToAnalyzeStateInterface } from './state';
 import { StateInterface } from '../index';
 
-import { noteServices } from '@/services/note';
+import { NoteServices } from '@/services/note';
 import { notifications } from '@/utils/Notifications';
 
 import type { Note } from '@/types/Note';
 
 const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
-	async createNote({ commit, state }, payload: { title: string; text: string; list_id: number }) {
+	async createNote({ commit, state, rootState }, payload: { title: string; text: string; list_id: number }) {
 		if (!state.idYoutubeVideo) {
 			notifications.error({ title: 'Error', text: "Can't create a note without the video url" });
 			return;
 		}
+
+		const noteServices = new NoteServices(rootState.user.token as string);
 
 		try {
 			const data = await noteServices.create(
@@ -34,12 +36,13 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
-	async deleteNote({ commit, state }, payload: { id: number }) {
+	async deleteNote({ commit, state, rootState }, payload: { id: number }) {
 		const isNote = state.notes?.some((note) => note.id === payload.id);
 		if (!isNote) {
 			console.error('Error: no se encuentra ninguna nota que posea dicho id ->' + payload.id);
 			return;
 		}
+		const noteServices = new NoteServices(rootState.user.token as string);
 
 		try {
 			const data = await noteServices.delete(payload.id);

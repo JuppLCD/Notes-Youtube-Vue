@@ -1,4 +1,4 @@
-import { apiAuthAxiosInstance } from './axios';
+import { AxiosAuthInstance } from './axios';
 
 import {
 	API_REPLACE_PARAMS,
@@ -17,10 +17,10 @@ import { replacePramasFromUrl } from './utils';
 import type { BasicNote, Note } from '@/types/Note';
 import type { AxiosError } from 'axios';
 
-class NoteServices {
+export class NoteServices extends AxiosAuthInstance {
 	getAll = async () => {
 		try {
-			const res = await apiAuthAxiosInstance.get<Note[]>(API_PATH_NOTES_GET_ALL);
+			const res = await this.apiAuthAxiosInstance.get<Note[]>(API_PATH_NOTES_GET_ALL);
 
 			return res.data;
 		} catch (err) {
@@ -34,7 +34,7 @@ class NoteServices {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTES_GET_BY_ID, { [noteId]: API_REPLACE_PARAMS.noteId });
 
-			const res = await apiAuthAxiosInstance.get<Note>(url);
+			const res = await this.apiAuthAxiosInstance.get<Note>(url);
 
 			return res.data;
 		} catch (err) {
@@ -50,7 +50,7 @@ class NoteServices {
 				[idYTVideo]: API_REPLACE_PARAMS.idYTVideo,
 			});
 
-			const res = await apiAuthAxiosInstance.get<Note[]>(url);
+			const res = await this.apiAuthAxiosInstance.get<Note[]>(url);
 
 			return res.data;
 		} catch (err) {
@@ -62,7 +62,7 @@ class NoteServices {
 
 	create = async (note: BasicNote, noteListId: number | null) => {
 		try {
-			const res = await apiAuthAxiosInstance.post<Note>(API_PATH_NOTES_CREATE, { ...note, list_id: noteListId });
+			const res = await this.apiAuthAxiosInstance.post<Note>(API_PATH_NOTES_CREATE, { ...note, list_id: noteListId });
 
 			return res.data;
 		} catch (err) {
@@ -75,7 +75,7 @@ class NoteServices {
 	updateAll = async (note: BasicNote, noteId: number) => {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTES_UPDATE, { [noteId]: API_REPLACE_PARAMS.noteId });
-			const res = await apiAuthAxiosInstance.put<Note>(url, note);
+			const res = await this.apiAuthAxiosInstance.put<Note>(url, note);
 
 			return res.data;
 		} catch (err) {
@@ -88,7 +88,7 @@ class NoteServices {
 	updateColumn = async (note: Partial<BasicNote>, noteId: number) => {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTES_UPDATE, { [noteId]: API_REPLACE_PARAMS.noteId });
-			const res = await apiAuthAxiosInstance.patch<Note>(url, note);
+			const res = await this.apiAuthAxiosInstance.patch<Note>(url, note);
 
 			return res.data;
 		} catch (err) {
@@ -101,7 +101,7 @@ class NoteServices {
 	delete = async (noteId: number) => {
 		try {
 			const url = replacePramasFromUrl(API_PATH_NOTES_DELETE, { [noteId]: API_REPLACE_PARAMS.noteId });
-			const res = await apiAuthAxiosInstance.delete<Note>(url);
+			const res = await this.apiAuthAxiosInstance.delete<Note>(url);
 
 			return res.data;
 		} catch (err) {
@@ -117,7 +117,7 @@ class NoteServices {
 				[noteId]: API_REPLACE_PARAMS.noteId,
 				[noteListId]: API_REPLACE_PARAMS.noteListId,
 			});
-			const res = await apiAuthAxiosInstance.post(url);
+			const res = await this.apiAuthAxiosInstance.post(url);
 
 			return res.status === 200;
 		} catch (err) {
@@ -133,7 +133,7 @@ class NoteServices {
 				[noteId]: API_REPLACE_PARAMS.noteId,
 				[noteListId]: API_REPLACE_PARAMS.noteListId,
 			});
-			const res = await apiAuthAxiosInstance.delete(url);
+			const res = await this.apiAuthAxiosInstance.delete(url);
 
 			return res.status === 200;
 		} catch (err) {
@@ -144,5 +144,3 @@ class NoteServices {
 		}
 	};
 }
-
-export const noteServices = new NoteServices();

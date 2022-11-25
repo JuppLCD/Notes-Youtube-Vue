@@ -4,7 +4,6 @@ import { computed, ref } from 'vue';
 import { useStoreVuex } from '@/store';
 
 import Button from './Button.vue';
-import { useRouter } from 'vue-router';
 
 const isMenuOpen = ref(false);
 
@@ -13,11 +12,8 @@ const companyName = 'Notes-Youtube';
 const store = useStoreVuex();
 const isAuth = computed(() => store.state.user.isAuth);
 
-const router = useRouter();
-
 const logout = () => {
 	store.dispatch('user/logout');
-	router.push({ name: 'home' });
 };
 
 const classLinksBase = {
