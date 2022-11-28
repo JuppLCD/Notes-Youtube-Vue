@@ -1,7 +1,7 @@
 import { Note } from './Note';
 
 export interface BasicNoteList {
-	name: string;
+	title: string;
 	description: string;
 }
 

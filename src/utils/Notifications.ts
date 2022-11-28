@@ -46,6 +46,16 @@ class Notifications {
 			text,
 		});
 	}
+
+	loading({ title = 'Loading...', text = 'Fetching data' }: NotificationsProps): void {
+		notify({
+			type: 'loading',
+			duration: 3000,
+			speed: 1000,
+			title,
+			text,
+		});
+	}
 }
 
 export const notifications = new Notifications();

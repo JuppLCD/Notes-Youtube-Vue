@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
-import { HomePage, VideoNotesPage, NotFoundPage, SessionPage } from '@/views';
+import { HomePage, VideoNotesPage, NotFoundPage, SessionPage, MyListsPage, NoteListDetailsPage } from '@/views';
 
 import NotesVue from '@/views/VideoNotes/Notes.vue';
 import FormCreateNoteVue from '@/views/VideoNotes/FormCreateNote.vue';
@@ -40,6 +40,18 @@ const router = createRouter({
 			component: SessionPage,
 			name: 'signup',
 			meta: { typeOfVisibility: TypeOfVisibility.guest },
+		},
+		{
+			path: '/my-lists-of-notes',
+			component: MyListsPage,
+			name: 'myListsOfNotes',
+			meta: { typeOfVisibility: TypeOfVisibility.auth },
+		},
+		{
+			path: '/note-list/:noteListId',
+			component: NoteListDetailsPage,
+			name: 'noteList',
+			meta: { typeOfVisibility: TypeOfVisibility.auth },
 		},
 
 		// Not Found

@@ -82,6 +82,16 @@ const classLinks = {
 					</template>
 					<template v-else>
 						<li>
+							<RouterLink
+								:to="{ name: 'myListsOfNotes' }"
+								aria-label="My Lists"
+								title="My Lists"
+								:class="classLinks.desktop.nomrmal"
+							>
+								My Lists
+							</RouterLink>
+						</li>
+						<li>
 							<Button
 								aria-label="Logout"
 								title="Logout"
@@ -203,6 +213,16 @@ const classLinks = {
 										</li>
 									</template>
 									<template v-else>
+										<li>
+											<RouterLink
+												:to="{ name: 'myListsOfNotes' }"
+												aria-label="My Lists"
+												title="My Lists"
+												:class="classLinks.mobile.nomrmal"
+											>
+												My Lists
+											</RouterLink>
+										</li>
 										<li>
 											<Button
 												aria-label="Logout"
