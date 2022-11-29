@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import { useStoreVuex } from '@/store';
 
 import Container from '@/components/Container.vue';
+import CardNoteList from '@/components/CardNoteList.vue';
 
 const store = useStoreVuex();
 
@@ -17,17 +18,11 @@ if (!myLists.value) {
 <template>
 	<main>
 		<Container>
-			<h1 class="text-3xl mb-2">Todas mis listas de notas</h1>
+			<h1 class="text-3xl mb-2 text-center">Todas mis listas de notas</h1>
 			<ul v-if="myLists">
-				<li v-for="list in myLists" :key="list.id">
-					<RouterLink
-						:to="{ name: 'noteList', params: { noteListId: list.id } }"
-						:aria-label="list.title"
-						:title="list.title"
-					>
-						{{ list.title }} - N° Notes | {{ list.notes.length }}
-					</RouterLink>
-				</li>
+				<template v-for="list in myLists" :key="list.id">
+					<CardNoteList :noteList="list" />
+				</template>
 			</ul>
 		</Container>
 	</main>
