@@ -47,7 +47,7 @@ class Notifications {
 		});
 	}
 
-	loading({ title = 'Loading...', text = 'Fetching data' }: NotificationsProps): void {
+	loading({ title = 'Loading...', text = 'Communicating with the server' }: NotificationsProps): void {
 		notify({
 			type: 'loading',
 			duration: 3000,

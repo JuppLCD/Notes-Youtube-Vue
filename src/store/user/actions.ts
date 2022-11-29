@@ -12,6 +12,7 @@ import type { LoginCredentialsInterface, RegisterCredentialsInterface } from '@/
 const actions: ActionTree<UserStateInterface, StateInterface> = {
 	async loginCredentials({ commit }, payload: LoginCredentialsInterface) {
 		try {
+			notifications.loading({});
 			const data = await userService.loginWhitCredentials(payload);
 			if (data?.accessToken) {
 				notifications.succes({ title: 'Successfully logged in' });
@@ -26,6 +27,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 	},
 	async signup({ commit }, payload: RegisterCredentialsInterface) {
 		try {
+			notifications.loading({});
 			const data = await userService.register(payload);
 			if (data?.accessToken) {
 				notifications.succes({ title: 'Successfully sign up' });
@@ -44,6 +46,7 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 		if (!token) return;
 
 		try {
+			notifications.loading({});
 			const data = await userService.validToken(token);
 			if (data?.accessToken) {
 				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });

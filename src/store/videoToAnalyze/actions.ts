@@ -15,7 +15,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 		}
 
 		const noteServices = new NoteServices(rootState.user.token as string);
-
+		notifications.loading({});
 		try {
 			const data = await noteServices.create(
 				{ title: payload.title, text: payload.text, idYTVideo: state.idYoutubeVideo },
@@ -43,7 +43,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			return;
 		}
 		const noteServices = new NoteServices(rootState.user.token as string);
-
+		notifications.loading({});
 		try {
 			const data = await noteServices.delete(payload.id);
 
@@ -65,6 +65,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 		}
 
 		const noteServices = new NoteServices(rootState.user.token as string);
+		notifications.loading({});
 		try {
 			const data = await noteServices.getByIdYTVideo(idYoutubeVideo);
 			const isOk = notifications.errorService<Note[]>(data);
@@ -77,7 +78,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
-	async setIdYoutubeVideo({ commit, dispatch }, payload: { idVideo: string }) {
+	setIdYoutubeVideo({ commit, dispatch }, payload: { idVideo: string }) {
 		commit('setIdYoutubeVideo', payload.idVideo);
 		dispatch('getNotesByIdYoutubeVideo', payload);
 	},
