@@ -9,6 +9,7 @@ import { NoteListServices } from '@/services/noteList';
 import { notifications } from '@/utils/Notifications';
 
 import Container from '@/components/Container.vue';
+import CardNote from '@/components/CardNote.vue';
 
 import { FullNoteList } from '@/types/NoteList';
 
@@ -42,7 +43,14 @@ if (!myLists.value) {
 	})();
 } else if (myLists.value && myLists.value.some((list) => list.id === noteListId)) {
 	noteList.value = myLists.value.find((list) => list.id === noteListId);
+} else {
+	console.error('Error');
 }
+
+const deleteNote = (id: number): void => {
+	if (!noteList.value) return;
+	store.dispatch('noteLists/deleteNoteFromAllFull', { noteId: id, noteListId: noteList.value.id });
+};
 </script>
 
 <template>
@@ -50,6 +58,9 @@ if (!myLists.value) {
 		<Container>
 			<template v-if="noteList">
 				<h1 class="text-3xl mb-2">{{ noteList.title }}</h1>
+				<ul>
+					<CardNote v-for="note in noteList.notes" :key="note.id" :note="note" @deleteNote="deleteNote" />
+				</ul>
 			</template>
 			<template v-else>
 				<h1 class="text-3xl mb-2">{{ route.params.noteListId }}</h1>
