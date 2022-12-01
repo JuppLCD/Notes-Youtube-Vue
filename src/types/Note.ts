@@ -6,5 +6,5 @@ export interface BasicNote {
 
 export interface Note extends BasicNote {
 	id: number;
-	lists: { id: number; title: string }[];
+	lists?: { id: number; title: string }[];
 }
