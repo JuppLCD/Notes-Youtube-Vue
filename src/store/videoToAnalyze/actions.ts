@@ -8,7 +8,7 @@ import { notifications } from '@/utils/Notifications';
 import type { Note } from '@/types/Note';
 
 const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
-	async createNote({ commit, state, rootState }, payload: { title: string; text: string; list_id: number }) {
+	async createNote({ commit, state, rootState, dispatch }, payload: { title: string; text: string; list_id: number }) {
 		if (!state.idYoutubeVideo) {
 			notifications.error({ title: 'Error', text: "Can't create a note without the video url" });
 			return;
@@ -22,8 +22,6 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 				payload.list_id
 			);
 
-			console.log(typeof data, '<-- type of -->', data);
-
 			const isOk = notifications.errorService<Note>(data);
 			if (!isOk) return;
 
@@ -31,12 +29,13 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 
 			notifications.succes({ title: 'Success creating a new note' });
 
+			dispatch('refreshStoreNoteLists');
 			commit('addNote', newNote);
 		} catch (err) {
 			console.error(err);
 		}
 	},
-	async deleteNote({ commit, state, rootState }, payload: { id: number }) {
+	async deleteNote({ commit, state, rootState, dispatch }, payload: { id: number }) {
 		const isNote = state.notes?.some((note) => note.id === payload.id);
 		if (!isNote) {
 			console.error('Error: no se encuentra ninguna nota que posea dicho id ->' + payload.id);
@@ -52,6 +51,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 
 			notifications.succes({ title: 'Deleted note' });
 
+			dispatch('refreshStoreNoteLists');
 			commit('deleteNote', { id: payload.id });
 		} catch (err) {
 			console.error(err);
@@ -81,6 +81,10 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 	setIdYoutubeVideo({ commit, dispatch }, payload: { idVideo: string }) {
 		commit('setIdYoutubeVideo', payload.idVideo);
 		dispatch('getNotesByIdYoutubeVideo', payload);
+	},
+
+	refreshStoreNoteLists({ commit }) {
+		commit('noteLists/refresh', undefined, { root: true });
 	},
 };
 

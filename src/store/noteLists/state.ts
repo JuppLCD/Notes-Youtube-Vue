@@ -5,6 +5,7 @@ import { defaultNoteListState } from '../defoultStates';
 export interface NoteListsStateInterface {
 	all?: NoteList[];
 	allFull?: FullNoteList[];
+	current?: FullNoteList;
 }
 
 function state(): NoteListsStateInterface {

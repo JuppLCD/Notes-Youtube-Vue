@@ -1,5 +1,7 @@
-import { MutationTree } from 'vuex';
-import { VideoToAnalyzeStateInterface } from './state';
+import type { MutationTree } from 'vuex';
+import type { VideoToAnalyzeStateInterface } from './state';
+
+import { defaultVideoToAnalyzeState } from '../defoultStates';
 
 import type { Note } from '@/types/Note';
 
@@ -18,6 +20,9 @@ const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 	},
 	setNotesByIdYoutubeVideo(state, payload: Note[]) {
 		state.notes = payload;
+	},
+	refresh(state) {
+		state = { ...defaultVideoToAnalyzeState };
 	},
 };
 

@@ -13,7 +13,7 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 	async getAll({ commit, rootState }) {
 		try {
 			const noteListServices = new NoteListServices(rootState.user.token as string);
-			notifications.loading({});
+			notifications.loading({ text: 'Fetching lists of notes' });
 			const data = await noteListServices.getAll();
 
 			const isOk = notifications.errorService<NoteList[]>(data);
@@ -28,7 +28,7 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 	async getAllFull({ commit, rootState }) {
 		try {
 			const noteListServices = new NoteListServices(rootState.user.token as string);
-			notifications.loading({});
+			notifications.loading({ text: 'Fetching all lists of notes' });
 			const data = await noteListServices.getAllFull();
 
 			const isOk = notifications.errorService<FullNoteList[]>(data);
@@ -40,8 +40,33 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 		}
 	},
 
-	async deleteNoteFromAllFull({ commit, rootState, state }, payload: { noteListId: number; noteId: number }) {
-		const noteList = state.allFull?.find((noteList) => noteList.id === payload.noteListId);
+	async getCurrentNoteList({ rootState, commit, state }, payload: { id: number }) {
+		const noteList = state.allFull?.find((list) => list.id === payload.id);
+
+		if (noteList) {
+			commit('setCurrent', { current: noteList });
+			return;
+		}
+
+		const noteListService = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Fetching the note list data' });
+		try {
+			const data = await noteListService.getById(payload.id);
+
+			const isOk = notifications.errorService<FullNoteList>(data);
+			if (!isOk) return;
+
+			commit('setCurrent', { current: data });
+		} catch (err) {
+			console.error(err);
+		}
+	},
+
+	async deleteNoteFromAllFull({ commit, rootState, state, dispatch }, payload: { noteListId: number; noteId: number }) {
+		const noteList =
+			state.allFull?.find((noteList) => noteList.id === payload.noteListId) || state.current?.id === payload.noteListId
+				? state.current
+				: undefined;
 		if (!noteList) {
 			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.noteListId}`);
 			return;
@@ -56,7 +81,7 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 		}
 
 		const noteServices = new NoteServices(rootState.user.token as string);
-		notifications.loading({});
+		notifications.loading({ text: 'Deleting note...' });
 		try {
 			const data = await noteServices.delete(payload.noteId);
 
@@ -65,9 +90,14 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 
 			notifications.succes({ title: 'Deleted note' });
 			commit('deleteNote', { noteId: payload.noteId, noteListId: payload.noteListId });
+			dispatch('refreshStoreVideoToAnalyze');
 		} catch (err) {
 			console.error(err);
 		}
+	},
+
+	refreshStoreVideoToAnalyze({ commit }) {
+		commit('videoToAnalyze/refresh', undefined, { root: true });
 	},
 };
 

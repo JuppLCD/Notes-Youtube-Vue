@@ -10,6 +10,7 @@
 export const defaultNoteListState = {
 	all: undefined,
 	allFull: undefined,
+	current: undefined,
 };
 
 // * VideoToAnalyzeState

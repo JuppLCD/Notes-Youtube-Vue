@@ -45,8 +45,8 @@ const actions: ActionTree<UserStateInterface, StateInterface> = {
 		const token = localStorage.getItem(TOKEN_KEY_LOCAL_STORAGE);
 		if (!token) return;
 
+		notifications.loading({ text: 'An authentication token was detected, looking for data on the server' });
 		try {
-			notifications.loading({});
 			const data = await userService.validToken(token);
 			if (data?.accessToken) {
 				commit('connectedUser', { token: data.accessToken, userId: data.user.userId, userName: data.user.userName });
