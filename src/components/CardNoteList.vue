@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import Button from './Button.vue';
+
 import { FullNoteList } from '@/types/NoteList';
 
 const { noteList } = defineProps<{ noteList: FullNoteList }>();
+
+const emits = defineEmits<{
+	(e: 'deleteNoteList', id: number): void;
+}>();
 </script>
 
 <template>
@@ -37,6 +43,8 @@ const { noteList } = defineProps<{ noteList: FullNoteList }>();
 				></path>
 			</svg>
 		</RouterLink>
+
+		<Button @click="emits('deleteNoteList', noteList.id)" color="red" type="button">Delete List</Button>
 	</li>
 </template>
 

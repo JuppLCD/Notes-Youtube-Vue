@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import Container from '@/components/Container.vue';
 import CardNote from '@/components/CardNote.vue';
+import Button from '@/components/Button.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -28,6 +29,13 @@ const deleteNote = (id: number): void => {
 	const noteListId = noteList.value.id;
 	store.dispatch('noteLists/deleteNoteFromAllFull', { noteId: id, noteListId });
 };
+const deleteNoteList = () => {
+	const isSure = confirm(`Are you sure you want to delete the list of notes ${noteList.value?.title ?? ''} ?`);
+	if (isSure) {
+		store.dispatch('noteLists/delete', { noteListId });
+		router.push({ name: 'myListsOfNotes' });
+	}
+};
 </script>
 
 <template>
@@ -35,6 +43,7 @@ const deleteNote = (id: number): void => {
 		<Container>
 			<template v-if="noteList">
 				<h1 class="text-3xl mb-2">{{ noteList.title }}</h1>
+				<Button @click="deleteNoteList" color="red" type="button" class="m-2 ml-auto">Delete</Button>
 				<ul>
 					<CardNote v-for="note in noteList.notes" :key="note.id" :note="note" @deleteNote="deleteNote" />
 				</ul>

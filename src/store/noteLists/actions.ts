@@ -11,9 +11,9 @@ import type { Note } from '@/types/Note';
 
 const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 	async getAll({ commit, rootState }) {
+		const noteListServices = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Fetching lists of notes' });
 		try {
-			const noteListServices = new NoteListServices(rootState.user.token as string);
-			notifications.loading({ text: 'Fetching lists of notes' });
 			const data = await noteListServices.getAll();
 
 			const isOk = notifications.errorService<NoteList[]>(data);
@@ -26,9 +26,9 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 	},
 
 	async getAllFull({ commit, rootState }) {
+		const noteListServices = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Fetching all lists of notes' });
 		try {
-			const noteListServices = new NoteListServices(rootState.user.token as string);
-			notifications.loading({ text: 'Fetching all lists of notes' });
 			const data = await noteListServices.getAllFull();
 
 			const isOk = notifications.errorService<FullNoteList[]>(data);
@@ -91,6 +91,35 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			notifications.succes({ title: 'Deleted note' });
 			commit('deleteNote', { noteId: payload.noteId, noteListId: payload.noteListId });
 			dispatch('refreshStoreVideoToAnalyze');
+		} catch (err) {
+			console.error(err);
+		}
+	},
+
+	async delete({ rootState, commit, state }, payload: { noteListId: number }) {
+		let noteList = state.allFull?.find((noteList) => noteList.id === payload.noteListId);
+
+		if (state.current?.id === payload.noteListId) {
+			noteList = state.current;
+		}
+
+		if (!noteList) {
+			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.noteListId}`);
+			return;
+		} else if (noteList.title === 'All Notes (default)') {
+			alert('No es posible borrar la lista por defecto');
+			return;
+		}
+
+		const noteListServices = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Deleting Lists of Notes' });
+		try {
+			const data = await noteListServices.delete(payload.noteListId);
+
+			const isOk = notifications.errorService<NoteList>(data);
+			if (!isOk) return;
+			notifications.succes({ title: 'Deleted list' });
+			commit('delete', payload.noteListId);
 		} catch (err) {
 			console.error(err);
 		}
