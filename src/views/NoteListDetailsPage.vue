@@ -43,7 +43,8 @@ const deleteNoteList = () => {
 		<Container>
 			<template v-if="noteList">
 				<h1 class="text-3xl mb-2">{{ noteList.title }}</h1>
-				<Button @click="deleteNoteList" color="red" type="button" class="m-2 ml-auto">Delete</Button>
+				<p><span class="text-lg font-bold">Description: </span> {{ noteList.description }}</p>
+				<Button @click="deleteNoteList" color="red" type="button" class="m-2 ml-auto">Delete List</Button>
 				<ul>
 					<CardNote v-for="note in noteList.notes" :key="note.id" :note="note" @deleteNote="deleteNote" />
 				</ul>
