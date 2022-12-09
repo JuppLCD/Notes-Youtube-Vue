@@ -26,7 +26,7 @@ const emits = defineEmits<{
 			:to="{ name: 'noteList', params: { noteListId: noteList.id } }"
 			:aria-label="noteList.title"
 			:title="noteList.title"
-			class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
+			class="inline-flex items-center py-2 px-4 text-center font-bold text-white rounded focus:ring-4 focus:outline-none bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
 		>
 			View More
 			<svg
@@ -44,7 +44,7 @@ const emits = defineEmits<{
 			</svg>
 		</RouterLink>
 
-		<Button @click="emits('deleteNoteList', noteList.id)" color="red" type="button">Delete List</Button>
+		<Button @click="emits('deleteNoteList', noteList.id)" color="red" type="button" class="ml-2">Delete List</Button>
 	</li>
 </template>
 
