@@ -25,7 +25,7 @@ const emits = defineEmits<{
 	width: 100%;
 	height: 100%;
 
-	background-color: rgba(0, 0, 0, 0.26);
+	background-color: rgba(0, 0, 0, 0.534);
 }
 
 .active {
@@ -35,8 +35,6 @@ const emits = defineEmits<{
 }
 
 .modal_dialog {
-	background-color: #fff;
-	padding: 20px;
-	color: #000;
+	@apply text-white bg-slate-800 p-5 rounded;
 }
 </style>
