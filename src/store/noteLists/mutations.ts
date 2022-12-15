@@ -24,6 +24,14 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 		const notes = noteList.notes.filter((note) => note.id !== payload.noteId) as Note[];
 		noteList.notes = notes;
 	},
+	updateNote(state, payload: { noteListId: number; note: Note }) {
+		const noteList = state.allFull?.find((noteList) => noteList.id === payload.noteListId) as FullNoteList;
+		const note = noteList.notes.find((note) => note.id !== payload.note.id) as Note;
+
+		note.text = payload.note.text;
+		note.title = payload.note.title;
+	},
+
 	delete(state, payload: { noteListId: number }) {
 		if (state.all) {
 			state.all = [...state.all.filter((noteList) => noteList.id !== payload.noteListId)];

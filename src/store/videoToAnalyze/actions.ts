@@ -57,6 +57,35 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
+	async updateNote({ commit, state, rootState, dispatch }, payload: Note) {
+		const isNote = state.notes?.some((note) => note.id === payload.id);
+		if (!isNote) {
+			console.error('Error: no se encuentra ninguna nota que posea dicho id ->' + payload.id);
+			return;
+		}
+		const noteServices = new NoteServices(rootState.user.token as string);
+		notifications.loading({ text: 'Updating note...' });
+		try {
+			const data = await noteServices.updateColumn(
+				{
+					title: payload.title,
+					text: payload.text,
+					// idYTVideo: payload.idYTVideo
+				},
+				payload.id
+			);
+
+			const isOk = notifications.errorService<Note>(data);
+			if (!isOk) return;
+
+			const note = data as Note;
+			notifications.succes({ title: 'Updated note' });
+
+			commit('updateNote', note);
+		} catch (err) {
+			console.error(err);
+		}
+	},
 	async getNotesByIdYoutubeVideo({ commit, state, rootState }, payload?: { idVideo: string }) {
 		const idYoutubeVideo = state.idYoutubeVideo || payload?.idVideo;
 

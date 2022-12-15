@@ -95,6 +95,47 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
+	async updateNote({ commit, rootState, state }, payload: { noteListId: number; note: Note }) {
+		const noteList =
+			state.allFull?.find((noteList) => noteList.id === payload.noteListId) || state.current?.id === payload.noteListId
+				? state.current
+				: undefined;
+		if (!noteList) {
+			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.noteListId}`);
+			return;
+		}
+
+		const isNote = noteList.notes?.some((note) => note.id === payload.note.id);
+		if (!isNote) {
+			console.error(
+				`Error: no se encuentra ninguna nota que posea dicho id -> ${payload.note.id} en la lista de notas "${noteList.title}"`
+			);
+			return;
+		}
+
+		const noteServices = new NoteServices(rootState.user.token as string);
+		notifications.loading({ text: 'Updating note...' });
+		try {
+			const data = await noteServices.updateColumn(
+				{
+					title: payload.note.title,
+					text: payload.note.text,
+					// idYTVideo: payload.idYTVideo
+				},
+				payload.note.id
+			);
+
+			const isOk = notifications.errorService<Note>(data);
+			if (!isOk) return;
+
+			const note = data as Note;
+
+			notifications.succes({ title: 'Updated note' });
+			commit('updateNote', { note, noteListId: payload.noteListId });
+		} catch (err) {
+			console.error(err);
+		}
+	},
 
 	async delete({ rootState, commit, state }, payload: { noteListId: number }) {
 		let noteList = state.allFull?.find((noteList) => noteList.id === payload.noteListId);
