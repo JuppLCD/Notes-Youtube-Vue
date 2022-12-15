@@ -15,7 +15,7 @@ const deleteNote = (id: number): void => {
 	store.dispatch('videoToAnalyze/deleteNote', { id });
 };
 
-const { open, handleSubmit, editInputs, showModalEditNote, closeModal } = useModalEditNote();
+const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useModalEditNote();
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const { open, handleSubmit, editInputs, showModalEditNote, closeModal } = useMod
 				@deleteNote="deleteNote"
 				@showModalEditNote="showModalEditNote"
 			/>
-			<ModalEditNote :open="open" :editInputs="editInputs" @handleSubmit="handleSubmit" @closeModal="closeModal" />
+			<ModalEditNote :open="open" :editInputs="noteToEdit" @handleSubmit="handleSubmit" @closeModal="closeModal" />
 		</ul>
 		<template v-else>
 			<p class="text-center">There are no notes, place a video and create your note...</p>

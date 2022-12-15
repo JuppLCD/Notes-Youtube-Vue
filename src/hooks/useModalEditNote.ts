@@ -10,19 +10,22 @@ export default function useModalEditNote() {
 
 	const closeModal = () => {
 		open.value = false;
-		editInputs.value = { title: '', text: '', id: null };
+		noteToEdit.value = {
+			title: '',
+			text: '',
+			id: 0,
+			idYTVideo: '',
+		};
 	};
 
 	const showModalEditNote = (note: Note) => {
-		editInputs.value.title = note.title;
-		editInputs.value.text = note.text;
-		editInputs.value.id = note.id;
+		noteToEdit.value = note;
 
 		open.value = true;
 	};
 
 	const handleSubmit = (e: Event) => {
-		if (!(editInputs.value.text && editInputs.value.title && editInputs.value.id)) {
+		if (!(noteToEdit.value.text && noteToEdit.value.title && noteToEdit.value.id)) {
 			// ! ERROR
 			return;
 		}
@@ -30,24 +33,21 @@ export default function useModalEditNote() {
 		const store = useStoreVuex();
 
 		if (route.name === 'YTVideoNotes') {
-			// store.dispatch('videoToAnalyze/updateNote', editInputs.value);
+			store.dispatch('videoToAnalyze/updateNote', noteToEdit.value);
 		} else if (route.name === 'noteList') {
 			const { noteListId } = route.params;
-			// store.dispatch('noteLists/updateNote', { ...editInputs.value, noteListId });
+			store.dispatch('noteLists/updateNote', { note: noteToEdit.value, noteListId });
 		}
 
 		closeModal();
 	};
 
-	const editInputs = ref<{
-		title: string;
-		text: string;
-		id: number | null;
-	}>({
+	const noteToEdit = ref<Note>({
 		title: '',
 		text: '',
-		id: null,
+		id: 0,
+		idYTVideo: '',
 	});
 
-	return { open, showModalEditNote, handleSubmit, editInputs, closeModal };
+	return { open, showModalEditNote, handleSubmit, noteToEdit, closeModal };
 }

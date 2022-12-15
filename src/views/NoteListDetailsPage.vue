@@ -40,7 +40,7 @@ const deleteNoteList = () => {
 	}
 };
 
-const { open, handleSubmit, editInputs, showModalEditNote, closeModal } = useModalEditNote();
+const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useModalEditNote();
 </script>
 
 <template>
@@ -64,6 +64,6 @@ const { open, handleSubmit, editInputs, showModalEditNote, closeModal } = useMod
 				<h1 class="text-3xl mb-2">{{ route.params.noteListId }}</h1>
 			</template>
 		</Container>
-		<ModalEditNote :open="open" :editInputs="editInputs" @handleSubmit="handleSubmit" @closeModal="closeModal" />
+		<ModalEditNote :open="open" :editInputs="noteToEdit" @handleSubmit="handleSubmit" @closeModal="closeModal" />
 	</main>
 </template>
