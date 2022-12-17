@@ -19,18 +19,19 @@ export default function useModalEditNote() {
 	};
 
 	const showModalEditNote = (note: Note) => {
-		noteToEdit.value = note;
+		noteToEdit.value = { ...note };
 
 		open.value = true;
 	};
+
+	const route = useRoute();
+	const store = useStoreVuex();
 
 	const handleSubmit = (e: Event) => {
 		if (!(noteToEdit.value.text && noteToEdit.value.title && noteToEdit.value.id)) {
 			// ! ERROR
 			return;
 		}
-		const route = useRoute();
-		const store = useStoreVuex();
 
 		if (route.name === 'YTVideoNotes') {
 			store.dispatch('videoToAnalyze/updateNote', noteToEdit.value);

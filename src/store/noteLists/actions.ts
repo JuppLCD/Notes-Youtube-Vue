@@ -63,10 +63,8 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 	},
 
 	async deleteNoteFromAllFull({ commit, rootState, state, dispatch }, payload: { noteListId: number; noteId: number }) {
-		const noteList =
-			state.allFull?.find((noteList) => noteList.id === payload.noteListId) || state.current?.id === payload.noteListId
-				? state.current
-				: undefined;
+		const noteList = state.current;
+
 		if (!noteList) {
 			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.noteListId}`);
 			return;
@@ -96,10 +94,8 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 		}
 	},
 	async updateNote({ commit, rootState, state }, payload: { noteListId: number; note: Note }) {
-		const noteList =
-			state.allFull?.find((noteList) => noteList.id === payload.noteListId) || state.current?.id === payload.noteListId
-				? state.current
-				: undefined;
+		const noteList = state.current;
+
 		if (!noteList) {
 			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.noteListId}`);
 			return;
@@ -131,7 +127,7 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			const note = data as Note;
 
 			notifications.succes({ title: 'Updated note' });
-			commit('updateNote', { note, noteListId: payload.noteListId });
+			commit('updateNote', note);
 		} catch (err) {
 			console.error(err);
 		}
