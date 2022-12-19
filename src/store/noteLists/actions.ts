@@ -87,13 +87,13 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			if (!isOk) return;
 
 			notifications.succes({ title: 'Deleted note' });
-			commit('deleteNote', { noteId: payload.noteId, noteListId: payload.noteListId });
 			dispatch('refreshStoreVideoToAnalyze');
+			commit('deleteNote', { noteId: payload.noteId, noteListId: payload.noteListId });
 		} catch (err) {
 			console.error(err);
 		}
 	},
-	async updateNote({ commit, rootState, state }, payload: { noteListId: number; note: Note }) {
+	async updateNote({ commit, rootState, state, dispatch }, payload: { noteListId: number; note: Note }) {
 		const noteList = state.current;
 
 		if (!noteList) {
@@ -127,6 +127,8 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			const note = data as Note;
 
 			notifications.succes({ title: 'Updated note' });
+
+			dispatch('refreshStoreVideoToAnalyze');
 			commit('updateNote', note);
 		} catch (err) {
 			console.error(err);

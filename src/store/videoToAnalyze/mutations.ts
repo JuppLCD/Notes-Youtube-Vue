@@ -30,7 +30,7 @@ const mutation: MutationTree<VideoToAnalyzeStateInterface> = {
 		note.title = payload.title;
 	},
 	refresh(state) {
-		state = { ...defaultVideoToAnalyzeState };
+		state.notes = undefined;
 	},
 };
 

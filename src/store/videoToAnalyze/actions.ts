@@ -81,6 +81,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			const note = data as Note;
 			notifications.succes({ title: 'Updated note' });
 
+			dispatch('refreshStoreNoteLists');
 			commit('updateNote', note);
 		} catch (err) {
 			console.error(err);

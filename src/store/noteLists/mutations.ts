@@ -46,7 +46,9 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 		}
 	},
 	refresh(state) {
-		state = { ...defaultNoteListState };
+		state.all = undefined;
+		state.allFull = undefined;
+		state.current = undefined;
 	},
 };
 
