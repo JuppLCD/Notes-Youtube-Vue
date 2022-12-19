@@ -36,6 +36,10 @@ const generateURLYoutubeEmbed = () => {
 
 	store.dispatch('videoToAnalyze/setIdYoutubeVideo', { idVideo });
 };
+
+if (store.state.videoToAnalyze.idYoutubeVideo && store.state.videoToAnalyze.notes === undefined) {
+	store.dispatch('videoToAnalyze/getNotesByIdYoutubeVideo', store.state.videoToAnalyze.idYoutubeVideo);
+}
 </script>
 
 <template>

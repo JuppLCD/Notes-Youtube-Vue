@@ -95,7 +95,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 		}
 
 		const noteServices = new NoteServices(rootState.user.token as string);
-		notifications.loading({});
+		notifications.loading({ text: 'Watching on the server if you have created notes of this video' });
 		try {
 			const data = await noteServices.getByIdYTVideo(idYoutubeVideo);
 			const isOk = notifications.errorService<Note[]>(data);
