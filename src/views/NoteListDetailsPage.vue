@@ -5,11 +5,14 @@ import { useStoreVuex } from '@/store';
 import { useRoute, useRouter } from 'vue-router';
 
 import useModalEditNote from '@/hooks/useModalEditNote';
+import useModalEditNoteList from '@/hooks/useModalEditNoteList';
 
 import Container from '@/components/Container.vue';
 import CardNote from '@/components/CardNote.vue';
 import Button from '@/components/Button.vue';
 import ModalEditNote from '@/components/ModalEditNote.vue';
+import ModalEditNoteList from '@/components/ModalEditNoteList.vue';
+import { FullNoteList } from '@/types/NoteList';
 
 const route = useRoute();
 const router = useRouter();
@@ -23,7 +26,7 @@ const store = useStoreVuex();
 
 const noteList = computed(() => store.state.noteLists.current);
 
-if (!noteList.value) {
+if (!noteList.value || noteListId !== noteList.value.id) {
 	store.dispatch('noteLists/getCurrentNoteList', { id: noteListId });
 }
 
@@ -40,7 +43,21 @@ const deleteNoteList = () => {
 	}
 };
 
+const noteListDefault = {
+	title: 'All Notes (default)',
+	description: 'Note list created by default',
+};
+
+const isDefoultNoteList =
+	noteList.value?.title === noteListDefault.title && noteList.value?.description === noteListDefault.description;
 const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useModalEditNote();
+const {
+	openModalEditNoteList,
+	handleSubmitEditNoteList,
+	noteListToEdit,
+	showModalEditNotelist,
+	closeModalEditNoteList,
+} = useModalEditNoteList();
 </script>
 
 <template>
@@ -48,8 +65,13 @@ const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useMod
 		<Container>
 			<template v-if="noteList">
 				<h1 class="text-3xl mb-2">{{ noteList.title }}</h1>
-				<p><span class="text-lg font-bold">Description: </span> {{ noteList.description }}</p>
-				<Button @click="deleteNoteList" color="red" type="button" class="m-2 ml-auto">Delete List</Button>
+				<p class="mb-3"><span class="text-lg font-bold">Description: </span> {{ noteList.description }}</p>
+				<div v-if="!isDefoultNoteList" class="mb-3">
+					<Button @click="deleteNoteList" color="red" type="button" class="m-2 ml-auto">Delete List</Button>
+					<Button @click="() => showModalEditNotelist(noteList as FullNoteList)" color="blue" type="button" class="ml-2"
+						>Edit List</Button
+					>
+				</div>
 				<ul>
 					<CardNote
 						v-for="note in noteList.notes"
@@ -65,5 +87,11 @@ const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useMod
 			</template>
 		</Container>
 		<ModalEditNote :open="open" :editInputs="noteToEdit" @handleSubmit="handleSubmit" @closeModal="closeModal" />
+		<ModalEditNoteList
+			:open="openModalEditNoteList"
+			:editInputs="noteListToEdit"
+			@handleSubmit="handleSubmitEditNoteList"
+			@closeModal="closeModalEditNoteList"
+		/>
 	</main>
 </template>
