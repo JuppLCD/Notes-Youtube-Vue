@@ -7,7 +7,16 @@ const { noteList } = defineProps<{ noteList: FullNoteList }>();
 
 const emits = defineEmits<{
 	(e: 'deleteNoteList', id: number): void;
+	(e: 'showModalEditNotelist', noteList: FullNoteList): void;
 }>();
+
+const noteListDefault = {
+	title: 'All Notes (default)',
+	description: 'Note list created by default',
+};
+
+const isDefoultNoteList =
+	noteList.title === noteListDefault.title && noteList.description === noteListDefault.description;
 </script>
 
 <template>
@@ -44,8 +53,11 @@ const emits = defineEmits<{
 			</svg>
 		</RouterLink>
 
-		<Button @click="emits('deleteNoteList', noteList.id)" color="red" type="button" class="ml-2">Delete List</Button>
+		<template v-if="!isDefoultNoteList">
+			<Button @click="emits('deleteNoteList', noteList.id)" color="red" type="button" class="ml-2">Delete List</Button>
+			<Button @click="emits('showModalEditNotelist', noteList)" color="blue" type="button" class="ml-2"
+				>Edit List</Button
+			>
+		</template>
 	</li>
 </template>
-
-<style scoped></style>
