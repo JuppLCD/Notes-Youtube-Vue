@@ -134,6 +134,38 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
+	async updateNoteList({ commit, rootState, state, dispatch }, payload: FullNoteList) {
+		const noteList = state.current || state.allFull?.find((noteList) => noteList.id === payload.id);
+
+		if (!noteList) {
+			console.error(`Error: no se encuentra ninguna lista de notas que posea dicho id -> ${payload.id}`);
+			return;
+		}
+
+		const noteListServices = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Updating note list...' });
+		try {
+			const data = await noteListServices.updateColumn(
+				{
+					title: payload.title,
+					description: payload.description,
+					// idYTVideo: payload.idYTVideo
+				},
+				payload.id
+			);
+
+			const isOk = notifications.errorService<NoteList>(data);
+			if (!isOk) return;
+
+			const noteList = data as NoteList;
+
+			notifications.succes({ title: 'Updated note list' });
+
+			commit('updateNoteList', noteList);
+		} catch (err) {
+			console.error(err);
+		}
+	},
 
 	async delete({ rootState, commit, state }, payload: { noteListId: number }) {
 		let noteList = state.allFull?.find((noteList) => noteList.id === payload.noteListId);

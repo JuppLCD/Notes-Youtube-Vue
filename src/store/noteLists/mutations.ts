@@ -1,8 +1,6 @@
 import type { MutationTree } from 'vuex';
 import type { NoteListsStateInterface } from './state';
 
-import { defaultNoteListState } from '../defoultStates';
-
 import type { Note } from '@/types/Note';
 import type { FullNoteList, NoteList } from '@/types/NoteList';
 
@@ -32,6 +30,36 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 		note.title = payload.title;
 	},
 
+	updateNoteList(state, payload: NoteList) {
+		if (state.all) {
+			state.all = [
+				...state.all.map((noteList) => {
+					if (noteList.id === payload.id) {
+						noteList.title = payload.title;
+						noteList.description = payload.description;
+					}
+					return noteList;
+				}),
+			];
+		}
+
+		if (state.current?.id === payload.id) {
+			state.current.title = payload.title;
+			state.current.description = payload.description;
+		}
+
+		if (state.allFull) {
+			state.allFull = [
+				...state.allFull.map((noteList) => {
+					if (noteList.id === payload.id) {
+						noteList.title = payload.title;
+						noteList.description = payload.description;
+					}
+					return noteList;
+				}),
+			];
+		}
+	},
 	delete(state, payload: { noteListId: number }) {
 		if (state.all) {
 			state.all = [...state.all.filter((noteList) => noteList.id !== payload.noteListId)];
