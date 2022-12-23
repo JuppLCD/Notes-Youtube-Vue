@@ -87,10 +87,10 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 			console.error(err);
 		}
 	},
-	async getNotesByIdYoutubeVideo({ commit, state, rootState }, payload?: { idVideo: string }) {
-		const idYoutubeVideo = state.idYoutubeVideo || payload?.idVideo;
+	async getNotesByIdYoutubeVideo({ commit, state, rootState }, payload: { idVideo: string }) {
+		const idYoutubeVideo = payload.idVideo || state.idYoutubeVideo;
 
-		if (!idYoutubeVideo) {
+		if (!idYoutubeVideo || state.notes?.length === 0) {
 			return;
 		}
 
@@ -109,8 +109,8 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 		}
 	},
 	setIdYoutubeVideo({ commit, dispatch }, payload: { idVideo: string }) {
-		commit('setIdYoutubeVideo', payload.idVideo);
 		dispatch('getNotesByIdYoutubeVideo', payload);
+		commit('setIdYoutubeVideo', payload.idVideo);
 	},
 
 	refreshStoreNoteLists({ commit }) {
