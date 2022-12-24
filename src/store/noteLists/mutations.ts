@@ -29,6 +29,16 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 		note.text = payload.text;
 		note.title = payload.title;
 	},
+	create(state, payload: NoteList) {
+		if (state.all) {
+			state.all.push(payload);
+		}
+
+		if (state.allFull) {
+			const newFullNoteList = { ...payload, notes: [] };
+			state.allFull.push(newFullNoteList);
+		}
+	},
 
 	updateNoteList(state, payload: NoteList) {
 		if (state.all) {
@@ -62,7 +72,7 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 	},
 	delete(state, payload: { noteListId: number }) {
 		if (state.all) {
-			state.all = [...state.all.filter((noteList) => noteList.id !== payload.noteListId)];
+			state.all = state.all.filter((noteList) => noteList.id !== payload.noteListId);
 		}
 
 		if (state.current?.id === payload.noteListId) {
@@ -70,7 +80,7 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 		}
 
 		if (state.allFull) {
-			state.allFull = [...state.allFull.filter((noteList) => noteList.id !== payload.noteListId)];
+			state.allFull = state.allFull.filter((noteList) => noteList.id !== payload.noteListId);
 		}
 	},
 	refresh(state) {

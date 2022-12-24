@@ -54,9 +54,9 @@ export class NoteListServices extends AxiosAuthInstance {
 		}
 	};
 
-	create = async (note: BasicNoteList) => {
+	create = async (noteList: BasicNoteList) => {
 		try {
-			const res = await this.apiAuthAxiosInstance.post<NoteList>(API_PATH_NOTE_LIST_CREATE, note);
+			const res = await this.apiAuthAxiosInstance.post<NoteList>(API_PATH_NOTE_LIST_CREATE, noteList);
 
 			return res.data;
 		} catch (err) {

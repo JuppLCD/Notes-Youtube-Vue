@@ -6,7 +6,7 @@ import { NoteListServices } from '@/services/noteList';
 import { NoteServices } from '@/services/note';
 import { notifications } from '@/utils/Notifications';
 
-import type { FullNoteList, NoteList } from '@/types/NoteList';
+import type { BasicNoteList, FullNoteList, NoteList } from '@/types/NoteList';
 import type { Note } from '@/types/Note';
 
 const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
@@ -191,6 +191,26 @@ const actions: ActionTree<NoteListsStateInterface, StateInterface> = {
 			if (!isOk) return;
 			notifications.succes({ title: 'Deleted list' });
 			commit('delete', payload.noteListId);
+		} catch (err) {
+			console.error(err);
+		}
+	},
+	async createNoteList({ rootState, commit }, payload: BasicNoteList) {
+		if (payload.title === 'All Notes (default)') {
+			alert('No es posible crear la lista con ese titulo');
+			return;
+		}
+
+		const noteListServices = new NoteListServices(rootState.user.token as string);
+		notifications.loading({ text: 'Create Lists of Notes' });
+		try {
+			const data = await noteListServices.create(payload);
+
+			const isOk = notifications.errorService<NoteList>(data);
+			if (!isOk) return;
+			notifications.succes({ title: 'Created list' });
+			const noteList = data as NoteList;
+			commit('create', noteList);
 		} catch (err) {
 			console.error(err);
 		}
