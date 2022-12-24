@@ -2,8 +2,11 @@
 import { useStoreVuex } from '@/store';
 import { computed, ref } from 'vue';
 
+import useModalCreateNoteList from '@/hooks/useModalCreateNoteList';
+
 import Button from '@/components/Button.vue';
 import MyInput from '@/components/MyInput.vue';
+import ModalCreateNoteList from '@/components/ModalCreateNoteList.vue';
 
 const formInputs = ref({
 	title: 'Titulo',
@@ -41,12 +44,17 @@ const optionsListNotes = computed(() => {
 	}
 	return store.state.noteLists.all;
 });
+
+const { openModalCreateNoteList, showModalCreateNoteList, closeModalCreateNoteList } = useModalCreateNoteList();
 </script>
 
 <template>
 	<article>
 		<form @submit.prevent="createNote" class="mt-6">
-			<h3 class="text-2xl text-center my-2">Create a new note</h3>
+			<h2 class="text-3xl text-center my-4">Create a new note</h2>
+			<div class="flex justify-end my-3">
+				<Button type="button" @click="showModalCreateNoteList">Create List</Button>
+			</div>
 			<MyInput type="text" v-model="formInputs.title" placeholder="Title"> </MyInput>
 			<label class="block my-2 text-sm font-medium text-gray-900 dark:text-gray-400">
 				<textarea
@@ -70,11 +78,12 @@ const optionsListNotes = computed(() => {
 				</select></label
 			>
 			<div class="flex justify-end">
-				<Button type="submit" class="mr-2" color="green">Create</Button>
-				<Button type="reset" @click="resetForm" class="mr-2">Reset</Button>
-				<Button type="button" color="red">Cancel</Button>
+				<Button type="submit" class="mr-2" color="green">Create Note</Button>
+				<Button type="reset" @click="resetForm" class="mr-2" color="red">Reset</Button>
 			</div>
 		</form>
+
+		<ModalCreateNoteList :open="openModalCreateNoteList" @closeModal="closeModalCreateNoteList" />
 	</article>
 </template>
 

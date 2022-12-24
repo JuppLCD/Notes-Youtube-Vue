@@ -5,10 +5,13 @@ import { useRouter } from 'vue-router';
 import { useStoreVuex } from '@/store';
 
 import useModalEditNoteList from '@/hooks/useModalEditNoteList';
+import useModalCreateNoteList from '@/hooks/useModalCreateNoteList';
 
 import Container from '@/components/Container.vue';
 import CardNoteList from '@/components/CardNoteList.vue';
 import ModalEditNoteList from '@/components/ModalEditNoteList.vue';
+import ModalCreateNoteList from '@/components/ModalCreateNoteList.vue';
+import Button from '@/components/Button.vue';
 
 import type { FullNoteList } from '@/types/NoteList';
 
@@ -37,12 +40,15 @@ const {
 	showModalEditNotelist,
 	closeModalEditNoteList,
 } = useModalEditNoteList();
+
+const { openModalCreateNoteList, showModalCreateNoteList, closeModalCreateNoteList } = useModalCreateNoteList();
 </script>
 
 <template>
 	<main>
 		<Container>
 			<h1 class="text-3xl mb-2 text-center">Todas mis listas de notas</h1>
+			<Button type="button" class="ml-auto mr-2 mb-3" @click="showModalCreateNoteList">Create List</Button>
 			<ul v-if="myLists">
 				<template v-for="list in myLists" :key="list.id">
 					<CardNoteList
@@ -59,5 +65,6 @@ const {
 			@handleSubmit="handleSubmitEditNoteList"
 			@closeModal="closeModalEditNoteList"
 		/>
+		<ModalCreateNoteList :open="openModalCreateNoteList" @closeModal="closeModalCreateNoteList" />
 	</main>
 </template>
