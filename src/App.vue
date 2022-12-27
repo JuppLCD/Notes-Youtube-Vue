@@ -1,16 +1,8 @@
 <script setup lang="ts">
-import Header from './components/Header.vue';
-import { useStoreVuex } from './store';
-
-const store = useStoreVuex();
-
-store.dispatch('user/loginToken');
+import Layout from '@/layout/Layout.vue';
 </script>
 
 <template>
-	<Header />
-	<RouterView />
+	<Layout />
 	<notifications position="top center" />
 </template>
-
-<style scoped></style>

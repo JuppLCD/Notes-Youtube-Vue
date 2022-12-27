@@ -78,6 +78,8 @@ router.beforeEach((to, from, next) => {
 			// routes -> (authRoute && isAuth) || (guestRoute && !isAuth) and typeOfVisibility is ever
 			next();
 	}
+
+	if (!isAuth && guestRoute) store.dispatch('user/loginToken');
 });
 
 export { router };
