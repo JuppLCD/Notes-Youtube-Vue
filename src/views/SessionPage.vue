@@ -11,9 +11,9 @@ const route = useRoute();
 const sessionType = computed(() => route.name as 'signup' | 'login');
 
 const sessionInputs = ref({
-	email: 'test@example.com',
+	email: '',
 	name: '',
-	password: 'password',
+	password: '',
 	confirmPassword: '',
 });
 
