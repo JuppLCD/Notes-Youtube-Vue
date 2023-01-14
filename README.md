@@ -18,3 +18,8 @@ git clone https://github.com/JuppLCD/Notes-Youtube-Backend-Laravel.git
 npm i
 npm run dev
 ```
+
+## Test user
+
+email: test@example.com
+password: password
