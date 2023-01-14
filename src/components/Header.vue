@@ -52,16 +52,6 @@ const classLinks = {
 							Home
 						</RouterLink>
 					</li>
-					<li>
-						<RouterLink
-							:to="{ name: 'YTVideoNotes' }"
-							aria-label="New Notes of YT video"
-							title="New Notes of YT video"
-							:class="classLinks.desktop.nomrmal"
-						>
-							YT video notes
-						</RouterLink>
-					</li>
 
 					<template v-if="!isAuth">
 						<li>
@@ -81,6 +71,17 @@ const classLinks = {
 						</li>
 					</template>
 					<template v-else>
+						<li>
+							<RouterLink
+								:to="{ name: 'YTVideoNotes' }"
+								aria-label="New Notes of YT video"
+								title="New Notes of YT video"
+								:class="classLinks.desktop.nomrmal"
+							>
+								YT video notes
+							</RouterLink>
+						</li>
+
 						<li>
 							<RouterLink
 								:to="{ name: 'myListsOfNotes' }"
@@ -179,16 +180,6 @@ const classLinks = {
 											Home
 										</RouterLink>
 									</li>
-									<li>
-										<RouterLink
-											:to="{ name: 'YTVideoNotes' }"
-											aria-label="New Notes of YT video"
-											title="New Notes of YT video"
-											:class="classLinks.mobile.nomrmal"
-										>
-											YT video notes
-										</RouterLink>
-									</li>
 
 									<template v-if="!isAuth">
 										<li>
@@ -213,6 +204,16 @@ const classLinks = {
 										</li>
 									</template>
 									<template v-else>
+										<li>
+											<RouterLink
+												:to="{ name: 'YTVideoNotes' }"
+												aria-label="New Notes of YT video"
+												title="New Notes of YT video"
+												:class="classLinks.mobile.nomrmal"
+											>
+												YT video notes
+											</RouterLink>
+										</li>
 										<li>
 											<RouterLink
 												:to="{ name: 'myListsOfNotes' }"
