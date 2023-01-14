@@ -12,6 +12,7 @@ import CardNoteList from '@/components/CardNoteList.vue';
 import ModalEditNoteList from '@/components/ModalEditNoteList.vue';
 import ModalCreateNoteList from '@/components/ModalCreateNoteList.vue';
 import Button from '@/components/Button.vue';
+import Spinner from '@/components/Spinner.vue';
 
 import type { FullNoteList } from '@/types/NoteList';
 
@@ -58,6 +59,9 @@ const { openModalCreateNoteList, showModalCreateNoteList, closeModalCreateNoteLi
 					/>
 				</template>
 			</ul>
+			<template v-else>
+				<Spinner />
+			</template>
 		</Container>
 		<ModalEditNoteList
 			:open="openModalEditNoteList"

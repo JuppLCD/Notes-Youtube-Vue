@@ -12,6 +12,8 @@ import CardNote from '@/components/CardNote.vue';
 import Button from '@/components/Button.vue';
 import ModalEditNote from '@/components/ModalEditNote.vue';
 import ModalEditNoteList from '@/components/ModalEditNoteList.vue';
+import Spinner from '@/components/Spinner.vue';
+
 import { FullNoteList } from '@/types/NoteList';
 
 const route = useRoute();
@@ -83,7 +85,7 @@ const {
 				</ul>
 			</template>
 			<template v-else>
-				<h1 class="text-3xl mb-2">{{ route.params.noteListId }}</h1>
+				<Spinner />
 			</template>
 		</Container>
 		<ModalEditNote :open="open" :editInputs="noteToEdit" @handleSubmit="handleSubmit" @closeModal="closeModal" />
