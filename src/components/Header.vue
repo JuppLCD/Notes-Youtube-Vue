@@ -5,9 +5,9 @@ import { useStoreVuex } from '@/store';
 
 import Button from './Button.vue';
 
-const isMenuOpen = ref(false);
+import { APP_NAME } from '@/config';
 
-const companyName = 'Notes-Youtube';
+const isMenuOpen = ref(false);
 
 const store = useStoreVuex();
 const isAuth = computed(() => store.state.user.isAuth);
@@ -38,13 +38,8 @@ const classLinks = {
 	<header class="bg-gray-900">
 		<div class="px-4 py-3 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
 			<div class="relative flex items-center justify-between">
-				<RouterLink
-					:to="{ name: 'home' }"
-					:aria-label="companyName"
-					:title="companyName"
-					class="inline-flex items-center"
-				>
-					<span class="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">{{ companyName }}</span>
+				<RouterLink :to="{ name: 'home' }" :aria-label="APP_NAME" :title="APP_NAME" class="inline-flex items-center">
+					<span class="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">{{ APP_NAME }}</span>
 				</RouterLink>
 				<ul class="items-center hidden space-x-8 lg:flex">
 					<li>
@@ -130,8 +125,8 @@ const classLinks = {
 								<div>
 									<RouterLink
 										:to="{ name: 'home' }"
-										:aria-label="companyName"
-										:title="companyName"
+										:aria-label="APP_NAME"
+										:title="APP_NAME"
 										class="inline-flex items-center"
 									>
 										<svg
@@ -149,7 +144,7 @@ const classLinks = {
 											<rect x="14" y="1" width="7" height="6"></rect>
 											<rect x="14" y="11" width="7" height="12"></rect>
 										</svg>
-										<span class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">{{ companyName }}</span>
+										<span class="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">{{ APP_NAME }}</span>
 									</RouterLink>
 								</div>
 								<div>
