@@ -25,7 +25,7 @@ const stepsData = [
 				</div>
 				<img
 					class="xl:w-3/5 lg:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12"
-					src="imgs/YT-Notes.jpg"
+					:src="'/imgs/YT-Notes.jpg'"
 					alt="step"
 				/>
 			</div>

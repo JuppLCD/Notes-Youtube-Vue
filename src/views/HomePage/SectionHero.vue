@@ -22,7 +22,7 @@ import { APP_NAME } from '@/config';
 				</p>
 			</div>
 			<div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-				<img class="object-cover object-center rounded" alt="hero" src="imgs/alexander-grey-tn57JI3CewI-unsplash.jpg" />
+				<img class="object-cover object-center rounded" alt="hero" :src="'/imgs/messOfNotes.jpg'" />
 			</div>
 		</div>
 	</section>
