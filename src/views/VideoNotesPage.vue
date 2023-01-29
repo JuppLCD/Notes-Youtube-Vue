@@ -8,7 +8,7 @@ import NavTabs from './VideoNotes/NavTabs.vue';
 <template>
 	<main>
 		<Container>
-			<h1 class="text-3xl">YOUTUBE NOTES</h1>
+			<h1 class="text-3xl mb-7">YOUTUBE NOTES</h1>
 			<Video />
 			<NavTabs />
 			<RouterView />

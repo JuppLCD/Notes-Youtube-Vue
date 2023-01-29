@@ -9,7 +9,8 @@ import MyInput from '@/components/MyInput.vue';
 
 const { notify } = useNotification();
 
-const urlYoutube = ref('https://www.youtube.com/watch?v=N9VE1NEavjc');
+// const urlYoutube = ref('https://www.youtube.com/watch?v=N9VE1NEavjc');
+const urlYoutube = ref('');
 
 const store = useStoreVuex();
 
@@ -48,6 +49,7 @@ if (store.state.videoToAnalyze.idYoutubeVideo && store.state.videoToAnalyze.note
 		v-model="urlYoutube"
 		@keyup.enter="generateURLYoutubeEmbed"
 		placeholder="URL of YouTube Video..."
+		class="md:px-10 lg:px-20"
 	>
 		Put a youtube video url here:
 	</MyInput>
@@ -74,5 +76,11 @@ if (store.state.videoToAnalyze.idYoutubeVideo && store.state.videoToAnalyze.note
 	background-color: gray;
 
 	margin: 20px auto;
+}
+@media screen and (min-width: 820px) {
+	.video {
+		height: 400px;
+		max-width: 700px;
+	}
 }
 </style>

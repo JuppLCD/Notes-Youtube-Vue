@@ -21,7 +21,7 @@ const { open, handleSubmit, noteToEdit, showModalEditNote, closeModal } = useMod
 <template>
 	<section class="py-2">
 		<h2 class="text-center text-3xl my-2">Notes of the YT Video</h2>
-		<ul v-if="notes && notes.length > 0">
+		<ul v-if="notes && notes.length > 0" class="md:px-10 lg:px-20">
 			<CardNote
 				v-for="note in notes"
 				:key="note.id"
