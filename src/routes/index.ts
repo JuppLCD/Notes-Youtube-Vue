@@ -65,8 +65,6 @@ router.beforeEach((to, from, next) => {
 
 	const isAuth = store.state.user.isAuth;
 
-	if (!isAuth && !authRoute) store.dispatch('user/loginToken');
-
 	switch (true) {
 		case authRoute && !isAuth:
 			next({ name: 'login' });
@@ -80,6 +78,8 @@ router.beforeEach((to, from, next) => {
 			// routes -> (authRoute && isAuth) || (guestRoute && !isAuth) and typeOfVisibility is ever
 			next();
 	}
+
+	if (!isAuth && !authRoute) store.dispatch('user/loginToken');
 });
 
 export { router };

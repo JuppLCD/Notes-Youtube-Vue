@@ -48,7 +48,7 @@ const { openModalCreateNoteList, showModalCreateNoteList, closeModalCreateNoteLi
 <template>
 	<main>
 		<Container>
-			<h1 class="text-3xl mb-2 text-center">Todas mis listas de notas</h1>
+			<h1 class="text-3xl mb-2 text-center">All my note lists</h1>
 			<Button type="button" class="ml-auto mr-2 mb-3" @click="showModalCreateNoteList">Create List</Button>
 			<ul v-if="myLists">
 				<template v-for="list in myLists" :key="list.id">
