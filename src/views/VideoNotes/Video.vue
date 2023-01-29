@@ -44,15 +44,16 @@ if (store.state.videoToAnalyze.idYoutubeVideo && store.state.videoToAnalyze.note
 </script>
 
 <template>
-	<MyInput
-		type="text"
-		v-model="urlYoutube"
-		@keyup.enter="generateURLYoutubeEmbed"
-		placeholder="URL of YouTube Video..."
-		class="md:px-10 lg:px-20"
-	>
-		Put a youtube video url here:
-	</MyInput>
+	<div class="md:px-10 lg:px-20">
+		<MyInput
+			type="text"
+			v-model="urlYoutube"
+			@keyup.enter="generateURLYoutubeEmbed"
+			placeholder="URL of YouTube Video..."
+		>
+			Put a youtube video url here:
+		</MyInput>
+	</div>
 
 	<iframe
 		v-if="urlYoutubeEmbed"
