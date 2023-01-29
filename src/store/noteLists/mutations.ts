@@ -83,6 +83,10 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 			state.allFull = state.allFull.filter((noteList) => noteList.id !== payload.noteListId);
 		}
 	},
+	refreshFullNoteList(state) {
+		state.allFull = undefined;
+		state.current = undefined;
+	},
 	refresh(state) {
 		state.all = undefined;
 		state.allFull = undefined;

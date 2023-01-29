@@ -1,8 +1,6 @@
 import type { MutationTree } from 'vuex';
 import type { VideoToAnalyzeStateInterface } from './state';
 
-import { defaultVideoToAnalyzeState } from '../defoultStates';
-
 import type { Note } from '@/types/Note';
 
 const mutation: MutationTree<VideoToAnalyzeStateInterface> = {

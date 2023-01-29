@@ -114,7 +114,7 @@ const actions: ActionTree<VideoToAnalyzeStateInterface, StateInterface> = {
 	},
 
 	refreshStoreNoteLists({ commit }) {
-		commit('noteLists/refresh', undefined, { root: true });
+		commit('noteLists/refreshFullNoteList', undefined, { root: true });
 	},
 };
 
