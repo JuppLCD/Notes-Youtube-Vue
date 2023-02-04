@@ -70,17 +70,17 @@ const mutation: MutationTree<NoteListsStateInterface> = {
 			];
 		}
 	},
-	delete(state, payload: { noteListId: number }) {
+	delete(state, payload: number) {
 		if (state.all) {
-			state.all = state.all.filter((noteList) => noteList.id !== payload.noteListId);
+			state.all = [...state.all.filter((noteList) => noteList.id !== payload)];
 		}
 
-		if (state.current?.id === payload.noteListId) {
+		if (state.current?.id === payload) {
 			state.current = undefined;
 		}
 
 		if (state.allFull) {
-			state.allFull = state.allFull.filter((noteList) => noteList.id !== payload.noteListId);
+			state.allFull = [...state.allFull.filter((noteList) => noteList.id !== payload)];
 		}
 	},
 	refreshFullNoteList(state) {
