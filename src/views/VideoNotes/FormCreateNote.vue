@@ -9,8 +9,8 @@ import MyInput from '@/components/MyInput.vue';
 import ModalCreateNoteList from '@/components/ModalCreateNoteList.vue';
 
 const formInputs = ref({
-	title: 'Titulo',
-	text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius, consequatur commodi! Deserunt dolore quod porro doloremque natus omnis distinctio inventore! Consequatur quidem nisi ab iste, ipsum voluptates totam reprehenderit optio?',
+	title: '',
+	text: '',
 	list_id: 1,
 });
 
